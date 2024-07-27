@@ -1,0 +1,46 @@
+.about-section {
+    background-color: white;
+    text-align: center;
+    padding: 100px 20px;
+    font-family: 'Arial, sans-serif';
+    color: #333;
+  }
+  
+  .quality-text {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #A9A9A9;
+    margin-bottom: 10px;
+  }
+  
+  .main-title {
+    font-size: 48px;
+    margin: 10px 0;
+  }
+  
+  .highlight {
+    font-style: italic;
+  }
+  
+  .about-description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 20px 0;
+    color: #555;
+  }
+  
+  .about-button {
+    background-color: transparent;
+    color: #A9A9A9;
+    border: 2px solid #A9A9A9;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .about-button:hover {
+    background-color: #A9A9A9;
+    color: #fff;
+  }
+  
