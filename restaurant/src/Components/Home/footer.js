@@ -22,13 +22,13 @@ export const Footer = () => {
           <small className="ms-2">&copy; Restaurant, 2024. All rights reserved.</small>
         </CDBBox>
         <CDBBox display="flex">
-          <CDBBtn flat color="dark" className="p-2">
+          <CDBBtn flat color="dark" className="p-2" >
             <CDBIcon fab icon="facebook-f" />
           </CDBBtn>
-          <CDBBtn flat color="dark" className="mx-3 p-2">
+          <CDBBtn flat color="dark" className="mx-3 p-2" >
             <CDBIcon fab icon="twitter" />
           </CDBBtn>
-          <CDBBtn flat color="dark" className="p-2">
+          <CDBBtn flat color="dark" className="p-2" >
             <CDBIcon fab icon="instagram" />
           </CDBBtn>
         </CDBBox>

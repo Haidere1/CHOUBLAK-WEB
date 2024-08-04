@@ -8,10 +8,12 @@
     margin: 0;
     height: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
   }
   
   .menu-header {
     text-align: center;
+    padding-right: 70px;
     margin-bottom: 20px;
   }
   
@@ -27,21 +29,41 @@
   
   .menu-items-container {
     max-height: 400px; /* Adjust the height as needed */
+    text-align: center;
     overflow-y: auto;
+    
+  }
+  .menu-items-container button
+  {
+    background: none;
+    text-decoration: none;
+    margin-right: 15%;
+    width: 30%;
+    transition: 1s;
+    border: 1px dotted rgb(127, 121, 121);
+  }
+  .menu-items-container button:hover
+  {
+    background-color: rgb(187, 238, 180);
+    border-radius: 20px;
+    border: none;
   }
   
   .menu-items {
+   
     list-style: none;
     padding: 0;
     margin: 0;
   }
   
   .menu-item {
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+    padding: 15px 10px;
+  
   }
   
   .menu-item:last-child {

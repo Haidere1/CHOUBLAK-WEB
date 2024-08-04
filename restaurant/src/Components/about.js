@@ -1,5 +1,6 @@
 import React from 'react';
 import '../CSS/Home/about.css';
+import { Link } from 'react-router-dom';
 
 const AboutSection = () => {
   return (
@@ -12,7 +13,7 @@ const AboutSection = () => {
       <p className="about-description">
         Thank you for creating lasting memories with us.
       </p>
-      <button className="about-button">ABOUT US</button>
+      <button className="about-button"><Link to='/aboutus' className="about-link" style={{color:"#A9A9A9"}}>ABOUT US</Link></button>
     </div>
   );
 }

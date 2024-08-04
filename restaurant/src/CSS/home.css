@@ -33,7 +33,7 @@ font-family: 'Jovelyn Blur Demo';
     margin-top: -10vh;
     font-size: xxx-large;
     margin-left: -30vw;
-    color: rgba(255, 255, 255, 0.995); 
+    color: rgba(79, 255, 15, 0.995); 
     text-shadow: 2px 2px 4px rgb(77, 60, 12);
 }
 .section h2
@@ -198,7 +198,7 @@ font-family: 'Jovelyn Blur Demo';
     background-position:center;
     background-size:cover;
     background-repeat: no-repeat;
-    color: rgba(46, 35, 2, 0.87); 
+    color: rgba(0, 0, 0, 0.87); 
     background-attachment: fixed;
     justify-content: center;
     align-items: center;

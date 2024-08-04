@@ -1,12 +1,20 @@
+.main_menu
+{
+  background: fixed;
+background-size: cover;
+}
+
 .starter
 {
+  background: fixed;
+background-size: cover;
   text-align: center;
   margin-top: 0;
-  background-color: aliceblue;
+
 }
 .starter h1
 {
-    color: rgb(159, 74, 74)    ;
+    color: rgb(67, 122, 43)    ;
     /* text-shadow: 
     0 0 5px #0ff, 
     0 0 10px #0ff, 
@@ -25,7 +33,7 @@
     border-bottom: 1px solid rgb(245, 235, 235) ;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
     padding-top: 10px;
-    
+    font-size: medium;
     background-color: transparent;
   }
   .menu-container::-webkit-scrollbar {
@@ -41,7 +49,7 @@
   }
   
   .menu-card {
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex: 0 0 200px;
     max-width: calc(25% - 20px); 
     border-radius: 30px;

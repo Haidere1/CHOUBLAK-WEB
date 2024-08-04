@@ -2,16 +2,17 @@ import React, { memo } from 'react';
 
 import '../../CSS/home.css';
 import firstfood from '../../background/firstfood.jpg';
-import bgmain from '../../background/bgmain.jpg';
-import secfood from '../../background/secfood.jpg';
+import bgmain from '../../background/haiti.jpg';
+import secfood from '../../background/no1haiti.jpeg';
 import midfood from '../../background/midfood.jpg';
-import show1 from '../../background/show2.jpg';
+import show1 from '../../background/haitifood1.jpeg';
 import CarouselEx from "./carousel.js";
 import Footer from './footer.js';
 import AboutSection from '../about.js';
 import MenuSection from '../menu/menu.js';
 import { Link } from 'react-router-dom';
 import CollapsibleExample from './tabbar.js';
+import { useEffect } from 'react';
 
 
 // Lazy load images for better performance
@@ -21,6 +22,9 @@ const Home = () => {
     const LazyImage = memo(({ src, alt }) => (
         <img loading="lazy" src={src} alt={alt} />
     ));
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
     
     const menuItems = [
         {
@@ -42,7 +46,7 @@ const Home = () => {
         
       ];
     return (
-        <div className="maindiv" style={{ backgroundImage: `url(${bgmain})` }}>
+        <div className="maindiv" style={{ backgroundColor:"#FFCB04" }}>
             
         <CollapsibleExample/>
             <div className="firstsection">

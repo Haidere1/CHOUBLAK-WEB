@@ -1,10 +1,12 @@
 import React from 'react';
 import './menu.css';
-import bgmain from '../../background/menu3.jpg'
-import CollapsibleExample from '../Home/tabbar';
+// import bgmain from '../../background/menu3.jpg'
+// import CollapsibleExample from '../Home/tabbar';
+// import Footer from '../Home/footer';
 const MenuSection = ({ title, description, items }) => {
     return (
-      <div className="menu-section">
+      <div className="menu-section"  >
+        
         
         <div className="menu-header">
           <h2>{title}</h2>
@@ -24,6 +26,7 @@ const MenuSection = ({ title, description, items }) => {
           </ul>
           <button style={{marginTop:"10%",color:"white"}}>MENU</button>
         </div>
+        
       </div>
     );
   };

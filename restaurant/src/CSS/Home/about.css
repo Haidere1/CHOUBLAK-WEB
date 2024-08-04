@@ -9,13 +9,14 @@
   .quality-text {
     font-size: 14px;
     letter-spacing: 2px;
-    color: #A9A9A9;
+    color: #ff120e;
     margin-bottom: 10px;
   }
   
   .main-title {
     font-size: 48px;
     margin: 10px 0;
+    color: green;
   }
   
   .highlight {
@@ -43,4 +44,5 @@
     background-color: #A9A9A9;
     color: #fff;
   }
+  
   
