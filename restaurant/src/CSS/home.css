@@ -6,6 +6,7 @@ height: auto;
 background: fixed;
 background-size: cover;
 font-family: 'Jovelyn Blur Demo';
+background-color: #BDF6FE;
 }
 .firstsection
 {
@@ -33,7 +34,7 @@ font-family: 'Jovelyn Blur Demo';
     margin-top: -10vh;
     font-size: xxx-large;
     margin-left: -30vw;
-    color: rgba(79, 255, 15, 0.995); 
+    color: rgba(255, 255, 251, 0.995); 
     text-shadow: 2px 2px 4px rgb(77, 60, 12);
 }
 .section h2

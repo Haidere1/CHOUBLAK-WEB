@@ -1,8 +1,7 @@
-import React from 'react';
+
 import styled from 'styled-components';
 
 const ModalBackground = styled.div`
-
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +24,6 @@ const ModalContent = styled.div`
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   position: relative;
-
 `;
 
 const ModalHeader = styled.div`
@@ -38,7 +36,7 @@ const ModalHeader = styled.div`
 `;
 
 const ModalTitle = styled.h2`
-color:green;
+  color: green;
   font-size: 1.5em;
   margin: 0;
 `;
@@ -61,9 +59,8 @@ const ModalBody = styled.div`
 
 const ModalImage = styled.img`
   width: 80%;
-  margin-left:10%;
+  margin-left: 10%;
   border-radius: 10px;
-  
 `;
 
 const ModalDescription = styled.p`
@@ -97,18 +94,32 @@ const AddToCartButton = styled.button`
 const ProductModal = ({ item, onClose }) => {
   if (!item) return null;
 
+  const addToCart = () => {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({
+      name: item.ProductName,
+      img: item.ProductImg,
+      description: item.ProductDescription,
+      price: item.ProductPrice,
+      quantity: 1,
+    });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('cartUpdated'));
+    
+  };
+
   return (
     <ModalBackground onClick={onClose}>
       <ModalContent onClick={e => e.stopPropagation()}>
         <ModalHeader>
-          <ModalTitle>{item.title}</ModalTitle>
+          <ModalTitle>{item.ProductName}</ModalTitle>
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </ModalHeader>
         <ModalBody>
-          <ModalImage src={item.image} alt={item.title} />
-          <ModalDescription>{item.description}</ModalDescription>
-          <ModalPrice>{item.price}</ModalPrice>
-          <AddToCartButton>Add to Cart</AddToCartButton>
+          <ModalImage src={item.ProductImg} alt={item.title} />
+          <ModalDescription>{item.ProductDescription}</ModalDescription>
+          <ModalPrice>{item.ProductPrice}</ModalPrice>
+          <AddToCartButton onClick={addToCart}>Add to Cart</AddToCartButton>
         </ModalBody>
       </ModalContent>
     </ModalBackground>
@@ -116,4 +127,3 @@ const ProductModal = ({ item, onClose }) => {
 };
 
 export default ProductModal;
-    

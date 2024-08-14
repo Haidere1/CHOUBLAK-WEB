@@ -18,7 +18,7 @@ const AboutUs=()=>{
 
 
     return(
-            <div className="about_main"style={{backgroundColor:"#FFCB04"}}>
+            <div className="about_main"style={{backgroundColor:"#BDF6FE"}}>
                <CollapsibleExample/>
                 <div className="about_1" style={{backgroundImage:`url(${about1})`}}>
 

@@ -46,7 +46,7 @@ const Home = () => {
         
       ];
     return (
-        <div className="maindiv" style={{ backgroundColor:"#FFCB04" }}>
+        <div className="maindiv" >
             
         <CollapsibleExample/>
             <div className="firstsection">

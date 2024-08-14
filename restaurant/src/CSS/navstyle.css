@@ -3,7 +3,7 @@ Nav.Item{
 }
 .logo
 {
-    max-height: 50px; /* Set the maximum height for the logo */
+    max-height: 100%; /* Set the maximum height for the logo */
     max-width: 100%; /* Ensure the logo doesn't exceed the Navbar's width */
     display: block; /* Make the image a block-level element for alignment */
     margin: 0 auto;
