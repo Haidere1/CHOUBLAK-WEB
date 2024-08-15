@@ -184,7 +184,7 @@ color: white;
     top: 0;
 }
 
-@media screen and (max-height:600px) {
+@media screen and (max-width:768px) {
 
     .about_main
     {
@@ -209,8 +209,8 @@ color: white;
     }
     .about_1 button
     {
-        width: 30%;
-        height: 10%;
+        width: 20%;
+        height: auto;
         align-self: center;
         background-color: transparent;
         transition: 1s;
@@ -289,6 +289,62 @@ height: 100%;
     padding-top: 30px;
     margin-top: 50px;
     border: 1px solid gray;
+}
+
+.res_map
+{
+    overflow: hidden;
+    height: 0;
+    padding-bottom: 30%;
+    position: relative;
+    
+}
+.feedback
+{
+text-align: center;
+width: 50%;
+background-color:rgb(12, 87, 80);
+padding: 55px;
+border-radius: 20px;
+color: white;
+
+}
+.feedback button
+{
+    display: block;
+    margin-left: 35%;
+    background:transparent;
+    text-decoration: none;
+    border: 1px solid white;
+    width:30%;
+    color: white;
+    transition: 1s;
+    
+}
+.feedback button:hover
+{
+    background-color: bisque;
+    color:rgb(12, 87, 80);
+    border-radius: 20px;
+}
+.feedback h3{
+    color: rgb(255, 255, 255);
+}
+.feedback textarea,input
+{
+    width: 70%;
+    border: 2px solid rgb(93, 155, 225);
+    text-decoration: none;
+}
+.res_map iframe
+{
+    border-radius: 20px;
+    right: 0;
+    border: 0;
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    top: 0;
 }
 
 }

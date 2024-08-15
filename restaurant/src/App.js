@@ -15,7 +15,7 @@ function App() {
   
   return (
 <Routes>
-  <Route path='/home' element={<AdminPanel/>}></Route>
+  <Route path='/home' element={<Home/>}></Route>
   <Route path='/menu' element={<BasicExample/>}></Route>
   <Route path='/aboutus' element={<AboutUs/>}></Route>
   <Route path='/cart' element={<Cart/>}></Route>
