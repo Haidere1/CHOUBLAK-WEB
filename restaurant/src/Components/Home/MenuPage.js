@@ -7,7 +7,51 @@ import CollapsibleExample from './tabbar';
 import Footer from './footer.js';
 import ProductModal from "../Products/viewproduct.js";
 import '../../CSS/menupage.css';
+import beverages from './icons/drinks.png'
+import main from './icons/main.png'
+import side from './icons/sides.png'
 
+
+const IconStrip = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background-color: #BDF6FE;
+`;
+
+const IconWrapper = styled.div`
+  position: relative;
+  margin: 0 20px;
+  cursor: pointer;
+
+  &:hover span {
+    opacity: 1;
+  }
+`;
+
+const IconImage = styled.img`
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const IconText = styled.span`
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+`;
 const MainMenu = styled.div`
   font-family: 'Jovelyn Blur Demo';
   background-color:#BDF6FE;
@@ -20,6 +64,7 @@ const MenuSection = styled.div`
 
 const SectionTitle = styled.h1`
   margin-bottom: 20px;
+  color: #333;
 `;
 
 const MenuContainer = styled.div`
@@ -29,76 +74,96 @@ const MenuContainer = styled.div`
   gap: 20px;
 `;
 
-const ProductCard = styled.div`
-  width: 18rem;
-  height: 60vh;
+const MenuCard = styled.div`
+  position: relative;
+  width: 280px;
+  height: 380px;
   border-radius: 30px;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.801);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 
   @media (max-width: 768px) {
-    width: 18rem;
-    height: 60%;
-    border-radius: 20px;
+    width: 280px;
   }
 
   @media (max-width: 480px) {
-    width: 18rem;
-    height: 50%;
-    border-radius: 15px;
+    width: 280px;
+  }
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    height:150px;
   }
 `;
 
 const ProductImage = styled.img`
-  width: 100%;
-  height: 50%;
+  width:90%;
+  height: 100%;
+  border-radius: 50%;
   object-fit: cover;
-  border-radius: 30px 30px 0 0;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+  }
 `;
 
-const ProductInfo = styled.div`
-  padding: 10px;
-  text-align: center;
-`;
-
-const ProductTitle = styled.h2`
-  font-size: 1.2em;
-  margin: 10px 0;
-  color: green;
+const ProductTitle = styled.h3`
+  font-size: 1.4em;
+  color: #333;
+  margin-bottom: 10px;
 `;
 
 const ProductDescription = styled.p`
-  font-size: 0.9em;
-  color: #777;
-  height: 40%;
+  color: #666;
+  font-size: 1em;
+  margin-bottom: 20px;
+  height: 50px;
   overflow: hidden;
 `;
 
-const ProductPrice = styled.p`
-  font-size: 1.25em;
-  color: #e91e63;
-`;
-
-const ExploreButton = styled.button`
-  background-color: #e91e63;
-  color: white;
-  font-size: 1em;
-  padding: 10px 20px;
+const AddButton = styled.button`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: red;
   border: none;
-  border-radius: 4px;
+  color: white;
+  font-size: 1.5em;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: #d81b60;
+    background-color: green;
   }
 `;
 
@@ -139,39 +204,59 @@ function BasicExample() {
     setSelectedItem(null);
   };
 
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <MainMenu>
       <CollapsibleExample />
       <CarouselEx />
+      
+      <IconStrip>
+        <IconWrapper onClick={() => scrollToSection('mains-section')}>
+          <IconImage src={main} alt="Mains Icon" />
+          <IconText>Mains</IconText>
+        </IconWrapper>
+        <IconWrapper onClick={() => scrollToSection('sides-section')}>
+          <IconImage src={side} alt="Sides Icon" />
+          <IconText>Sides</IconText>
+        </IconWrapper>
+        <IconWrapper onClick={() => scrollToSection('beverages-section')}>
+          <IconImage src={beverages} alt="Beverages Icon"/>
+          <IconText>Beverages</IconText>
+        </IconWrapper>
+      </IconStrip>
 
-      <MenuSection>
+      <MenuSection id="mains-section">
         <SectionTitle>Mains</SectionTitle>
         <MenuContainer>
           {mains.map((item, index) => (
-            <ProductCard key={index}>
-              <ProductImage src={item.ProductImg} alt={item.ProductName} />
-              <ProductInfo>
-                <ProductTitle>{item.ProductName}</ProductTitle>
-                <ProductDescription>{item.ProductDescription}</ProductDescription>
-                <ProductPrice>{`$${item.ProductPrice}`}</ProductPrice>
-                <ExploreButton onClick={() => handleExploreClick(item)}>Explore</ExploreButton>
-              </ProductInfo>
-            </ProductCard>
+            <MenuCard key={index}>
+              <ImageContainer>
+                <ProductImage src={item.ProductImg} alt={item.ProductName} />
+              </ImageContainer>
+              <ProductTitle>{item.ProductName}</ProductTitle>
+              <ProductDescription>{item.ProductDescription}</ProductDescription>
+              <AddButton onClick={() => handleExploreClick(item)}>+</AddButton>
+            </MenuCard>
           ))}
         </MenuContainer>
 
         <SectionTitle style={{ paddingTop: '20px' }}>Sides</SectionTitle>
-        <MenuContainer>
+        <MenuContainer id="sides-section">
           {sides.map((item, index) => (
-            <ProductCard key={index}>
-              <ProductImage src={item.ProductImg} alt={item.ProductName} />
-              <ProductInfo>
-                <ProductTitle>{item.ProductName}</ProductTitle>
-                <ProductDescription>{item.ProductDescription}</ProductDescription>
-                <ProductPrice>{`$${item.ProductPrice}`}</ProductPrice>
-                <ExploreButton onClick={() => handleExploreClick(item)}>Explore</ExploreButton>
-              </ProductInfo>
-            </ProductCard>
+            <MenuCard key={index}>
+              <ImageContainer>
+                <ProductImage src={item.ProductImg} alt={item.ProductName} />
+              </ImageContainer>
+              <ProductTitle>{item.ProductName}</ProductTitle>
+              <ProductDescription>{item.ProductDescription}</ProductDescription>
+              <AddButton onClick={() => handleExploreClick(item)}>+</AddButton>
+            </MenuCard>
           ))}
         </MenuContainer>
       </MenuSection>

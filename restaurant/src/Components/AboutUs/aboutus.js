@@ -5,7 +5,6 @@ import about3 from './choublak2.jpg'
 import about4 from './choublak3.jpg'
 import about5 from './choublak4.jpg'
 // import GoogleMapReact from 'google-map-react';
-import bgmain from '../../background/haiti.jpg'
 import {Link} from 'react-router-dom';
 import Footer from '../Home/footer.js';
 import { useEffect } from 'react';

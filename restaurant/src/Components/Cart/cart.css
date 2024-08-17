@@ -1,120 +1,168 @@
-@media (min-width: 1025px) {
-    .h-custom {
-    height: 100vh !important;
-    }
-    }
-    
-    .number-input input[type="number"] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
-    }
-    
-    .number-input input[type=number]::-webkit-inner-spin-button,
-    .number-input input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    }
-    
-    .number-input button {
-    -webkit-appearance: none;
-    background-color: transparent;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    position: relative;
-    }
-    
-    .number-input button:before,
-    .number-input button:after {
-    display: inline-block;
-    position: absolute;
-    content: '';
-    height: 2px;
-    transform: translate(-50%, -50%);
-    }
-    
-    .number-input button.plus:after {
-    transform: translate(-50%, -50%) rotate(90deg);
-    }
-    
-    .number-input input[type=number] {
-    text-align: center;
-    }
-    
-    .number-input.number-input {
-    border: 1px solid #ced4da;
-    width: 10rem;
-    border-radius: .25rem;
-    }
-    
-    .number-input.number-input button {
-    width: 2.6rem;
-    height: .7rem;
-    }
-    
-    .number-input.number-input button.minus {
-    padding-left: 10px;
-    }
-    
-    .number-input.number-input button:before,
-    .number-input.number-input button:after {
-    width: .7rem;
-    background-color: #495057;
-    }
-    
-    .number-input.number-input input[type=number] {
-    max-width: 4rem;
-    padding: .5rem;
-    border: 1px solid #ced4da;
-    border-width: 0 1px;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  h5 {
+    font-size: 1.25rem;
+    color: #333;
+  }
+  
+  h6 {
     font-size: 1rem;
-    height: 2rem;
-    color: #495057;
-    }
-    
-    @media not all and (min-resolution:.001dpcm) {
-    @supports (-webkit-appearance: none) and (stroke-color:transparent) {
-    
-    .number-input.def-number-input.safari_only button:before,
-    .number-input.def-number-input.safari_only button:after {
-    margin-top: -.3rem;
-    }
-    }
-    }
-    
-    .shopping-cart .def-number-input.number-input {
+    color: #666;
+  }
+  
+  .btn {
+    border-radius: 5px;
+  }
+  
+  .alert {
+    margin-bottom: 1rem;
+  }
+  
+  /* Cart Items */
+  .cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cart-item img {
+    max-width: 150px;
+    border-radius: 5px;
+  }
+  
+  .cart-item-details {
+    margin-left: 1rem;
+    flex-grow: 1;
+  }
+  
+  .cart-item-details .remove-btn {
+    color: #ff0000;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+  
+  .cart-item-details .quantity-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  
+  .cart-item-details .quantity-controls button {
+    background-color: #f0f0f0;
     border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .cart-item-details .quantity-controls input {
+    width: 60px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 10px;
+  }
+  
+  /* Total and Buttons */
+  .total-section {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .total-section h5 {
+    margin: 0;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .modal-content {
+    border-radius: 15px;
+    overflow: scroll;
+  }
+  
+  .modal-header,
+  .modal-footer {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .modal-title {
+    font-size: 1.25rem;
+  }
+  
+  .modal-body input {
+    margin-bottom: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    .cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+      
     }
-    
-    .shopping-cart .def-number-input.number-input input[type=number] {
-    max-width: 2rem;
-    border: none;
+  
+    .cart-item img {
+      max-width: 100%;
     }
-    
-    .shopping-cart .def-number-input.number-input input[type=number].black-text,
-    .shopping-cart .def-number-input.number-input input.btn.btn-link[type=number],
-    .shopping-cart .def-number-input.number-input input.md-toast-close-button[type=number]:hover,
-    .shopping-cart .def-number-input.number-input input.md-toast-close-button[type=number]:focus {
-    color: #212529 !important;
+  
+    .cart-item-details {
+      margin-left: 0;
     }
-    
-    .shopping-cart .def-number-input.number-input button {
-    width: 1rem;
+  
+    .total-section {
+      flex-direction: column;
+      align-items: flex-start;
     }
-    
-    .shopping-cart .def-number-input.number-input button:before,
-    .shopping-cart .def-number-input.number-input button:after {
-    width: .5rem;
+  }
+  
+  @media (max-width: 480px) {
+    h3 {
+      font-size: 1.25rem;
     }
-    
-    .shopping-cart .def-number-input.number-input button.minus:before,
-    .shopping-cart .def-number-input.number-input button.minus:after {
-    background-color: #9e9e9e;
+  
+    .cart-item-details .quantity-controls button,
+    .cart-item-details .quantity-controls input {
+      font-size: 0.875rem;
+      overflow: scroll;
     }
-    
-    .shopping-cart .def-number-input.number-input button.plus:before,
-    .shopping-cart .def-number-input.number-input button.plus:after {
-    background-color: #4285f4;
-    }
+  }
+  

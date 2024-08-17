@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 
 import '../../CSS/home.css';
-import firstfood from '../../background/firstfood.jpg';
-import bgmain from '../../background/haiti.jpg';
+import firstfood from '../../background/choublakmain.jpg';
 import secfood from '../../background/no1haiti.jpeg';
 import midfood from '../../background/midfood.jpg';
 import show1 from '../../background/haitifood1.jpeg';

@@ -16,7 +16,12 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: #fff;
+background: linear-gradient(135deg, #BDF6FE, rgba(154, 225, 225, 0.311));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.801);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   padding: 20px;
   border-radius: 20px;
   width: 90%;
@@ -96,20 +101,26 @@ const ProductModal = ({ item, onClose }) => {
 
   const addToCart = () => {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push({
-      name: item.ProductName,
-      img: item.ProductImg,
-      description: item.ProductDescription,
-      price: item.ProductPrice,
-      quantity: 1,
-    });
-    localStorage.setItem('cart', JSON.stringify(cart));
-    window.dispatchEvent(new Event('cartUpdated'));
-    
+    const itemExists = cart.some(cartItem => cartItem.name === item.ProductName);
+  
+    if (itemExists) {
+      alert("Item already in the cart"); // Display an error message if the item is already in the cart
+    } else {
+      cart.push({
+        name: item.ProductName,
+        img: item.ProductImg,
+        description: item.ProductDescription,
+        price: item.ProductPrice,
+        quantity: 1,
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
   };
+  
 
   return (
-    <ModalBackground onClick={onClose}>
+    <ModalBackground onClick={onClose} >
       <ModalContent onClick={e => e.stopPropagation()}>
         <ModalHeader>
           <ModalTitle>{item.ProductName}</ModalTitle>

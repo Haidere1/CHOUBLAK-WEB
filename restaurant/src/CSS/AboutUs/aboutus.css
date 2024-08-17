@@ -209,8 +209,8 @@ color: white;
     }
     .about_1 button
     {
-        width: 20%;
-        height: auto;
+        width: 30%;
+        height: 50%;
         align-self: center;
         background-color: transparent;
         transition: 1s;

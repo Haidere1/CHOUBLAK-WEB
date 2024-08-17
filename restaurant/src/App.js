@@ -15,7 +15,9 @@ function App() {
   
   return (
 <Routes>
+  <Route path='/' element={<AddProduct/>}></Route>
   <Route path='/home' element={<Home/>}></Route>
+  <Route path='/admin/update' element={<AdminPanel/>}></Route>
   <Route path='/menu' element={<BasicExample/>}></Route>
   <Route path='/aboutus' element={<AboutUs/>}></Route>
   <Route path='/cart' element={<Cart/>}></Route>
