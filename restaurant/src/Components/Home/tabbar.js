@@ -40,7 +40,7 @@ function CollapsibleExample() {
       }}
     >
       <Container>
-        <Navbar.Brand style={{ width: "15vw", paddingBottom: "0" }}>
+        <Navbar.Brand style={{ width: "180px", paddingBottom: "0" }}>
           <img
             className='logo'
             src={logo}

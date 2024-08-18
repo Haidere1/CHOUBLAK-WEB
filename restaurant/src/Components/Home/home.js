@@ -74,7 +74,7 @@ const Home = () => {
             </div>
 
             <div className="mainnews" style={{ backgroundImage: `url(${show1})` }}>
-                <div>
+                <div className='overlay'>
                     <h1>50% Off On All New Winter Products</h1>
                     <h2>Check Out New Stuff</h2>
                     <button>Go Now</button>

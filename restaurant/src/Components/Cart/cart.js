@@ -121,13 +121,16 @@ export default function Cart() {
       localStorage.removeItem('cart');
       setShowModal(false);
       alert("Order placed successfully!");
+      window.dispatchEvent(new Event('cartUpdated'));
+      setTotalPrice(null);
+
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
 
   return (
-    <section className="cart-section" style={{ backgroundColor: "#BDF6FE", minHeight: "100vh" }}>
+<section className="cart-section" style={{ backgroundColor: "#BDF6FE", minHeight: "100vh" ,fontFamily: 'Jovelyn Blur Demo',}}>
       <CollapsibleExample />
       <div className="container py-5">
         <h2 className="text-center mb-4">Your Cart</h2>

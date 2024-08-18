@@ -628,11 +628,17 @@ background-color: #BDF6FE;
 .mainnews div
 {
     text-align: center;
+      background-color: rgba(96, 250, 252, 0.6);
+      z-index: 2;
+      padding: 20px 100px;
+      text-align: center;
+  
 
 }
 .mainnews h1
 {
-    font-size: 5vw;
+  color: white;
+    font-size: 100px;
 }
 .mainnews h2
 {
@@ -737,7 +743,7 @@ background-color: antiquewhite;
 }
 .am_c_1
 {
-  background-color:white;
+  
   flex: 2;
   text-align: center;
 
