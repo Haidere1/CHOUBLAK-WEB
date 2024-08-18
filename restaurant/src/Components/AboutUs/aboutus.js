@@ -96,6 +96,7 @@ const AboutUs = () => {
                 <h2>Find Us on Google Maps</h2>
                 <div className="map-container">
                     <iframe 
+                    title='Map Location'
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.140580761341!2d-80.26170695555393!3d26.15955071824894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9079afc50c2b3%3A0x8c1e128cdcb968c9!2sChoublak%20Restaurant!5e0!3m2!1sen!2s!4v1723917819387!5m2!1sen!2s" width="600" height="450" style={{border:0}}
                      allowfullscreen="" loading="lazy" 
                      referrerpolicy="no-referrer-when-downgrade"></iframe>
