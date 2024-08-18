@@ -1,0 +1,40 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f81e2fb4.css",
+    "main.js": "/static/js/main.f00e91e2.js",
+    "static/media/firstfood.jpg": "/static/media/firstfood.968ddd082f1a85c8eb11.jpg",
+    "static/media/haiti.jpg": "/static/media/haiti.b73dcf44d0fbcf5ac317.jpg",
+    "static/media/bestseller.jpg": "/static/media/bestseller.f3bf155cc1eb250c5d64.jpg",
+    "static/media/about1.jpg": "/static/media/about1.040d30cee7c1b1a77b68.jpg",
+    "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.7a8b4f130182d19a2d7c.svg",
+    "static/media/fa-brands-400.svg": "/static/media/fa-brands-400.2f517e09eb2ca6650ff5.svg",
+    "static/media/midfood.jpg": "/static/media/midfood.d3fc2b57388127e0c9dd.jpg",
+    "static/media/haitifood1.jpeg": "/static/media/haitifood1.2d355fbc1020cc2d7fcc.jpeg",
+    "static/media/fa-solid-900.eot": "/static/media/fa-solid-900.9bbb245e67a133f6e486.eot",
+    "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.be9ee23c0c6390141475.ttf",
+    "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.4689f52cc96215721344.svg",
+    "static/media/choublak1.jpg": "/static/media/choublak1.7b85b3f47f3f4550f232.jpg",
+    "static/media/fa-brands-400.eot": "/static/media/fa-brands-400.23f19bb08961f37aaf69.eot",
+    "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.527940b104eb2ea366c8.ttf",
+    "static/media/logo.png": "/static/media/logo.2eb418f993e534727a4c.png",
+    "static/media/fa-solid-900.woff": "/static/media/fa-solid-900.eeccf4f66002c6f2ba24.woff",
+    "static/media/fa-brands-400.woff": "/static/media/fa-brands-400.2285773e6b4b172f07d9.woff",
+    "static/media/choublak4.jpg": "/static/media/choublak4.325f39fcc97761d9f220.jpg",
+    "static/media/fa-solid-900.woff2": "/static/media/fa-solid-900.1551f4f60c37af51121f.woff2",
+    "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.d878b0a6a1144760244f.woff2",
+    "static/media/choublak2.jpg": "/static/media/choublak2.d43f6cb24f038fc4325d.jpg",
+    "static/media/choublak3.jpg": "/static/media/choublak3.eea6a35569a0e7d3a8f6.jpg",
+    "static/media/no1haiti.jpeg": "/static/media/no1haiti.8a0c5d053e745f4bbd2f.jpeg",
+    "static/media/fa-regular-400.eot": "/static/media/fa-regular-400.77206a6bb316fa0aded5.eot",
+    "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.491974d108fe4002b2aa.ttf",
+    "static/media/fa-regular-400.woff": "/static/media/fa-regular-400.bb58e57c48a3e911f15f.woff",
+    "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.7a3337626410ca2f4071.woff2",
+    "index.html": "/index.html",
+    "main.f81e2fb4.css.map": "/static/css/main.f81e2fb4.css.map",
+    "main.f00e91e2.js.map": "/static/js/main.f00e91e2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f81e2fb4.css",
+    "static/js/main.f00e91e2.js"
+  ]
+}

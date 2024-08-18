@@ -4,7 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../Backend/Firebase/config';
 import CarouselEx from './carousel';
 import CollapsibleExample from './tabbar';
-import Footer from './footer.js';
+import Footer from './footer.js'
 import ProductModal from "../Products/viewproduct.js";
 import '../../CSS/menupage.css';
 import beverages from './icons/drinks.png'
@@ -130,7 +130,7 @@ const ProductImage = styled.img`
   }
 
   @media (max-width: 480px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 
@@ -217,15 +217,15 @@ function BasicExample() {
       <CarouselEx />
       
       <IconStrip>
-        <IconWrapper onClick={() => scrollToSection('mains-section')}>
+        <IconWrapper onClick={() => scrollToSection('mains-section')} data-aos="flip-up">
           <IconImage src={main} alt="Mains Icon" />
           <IconText>Mains</IconText>
         </IconWrapper>
-        <IconWrapper onClick={() => scrollToSection('sides-section')}>
+        <IconWrapper onClick={() => scrollToSection('sides-section')} data-aos="flip-up">
           <IconImage src={side} alt="Sides Icon" />
           <IconText>Sides</IconText>
         </IconWrapper>
-        <IconWrapper onClick={() => scrollToSection('beverages-section')}>
+        <IconWrapper onClick={() => scrollToSection('beverages-section')} data-aos="flip-up">
           <IconImage src={beverages} alt="Beverages Icon"/>
           <IconText>Beverages</IconText>
         </IconWrapper>

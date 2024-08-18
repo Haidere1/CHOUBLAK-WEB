@@ -36,7 +36,7 @@ function CollapsibleExample() {
         fontSize: "medium",
         padding: "10px 20px",
         borderRadius: "0px",
-        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)"
+        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
       }}
     >
       <Container>

@@ -4,10 +4,11 @@ import { collection, addDoc } from 'firebase/firestore';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import CollapsibleExample from '../Home/tabbar.js';
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import './cart.css'
+import './cart.css';
+
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -23,7 +24,6 @@ export default function Cart() {
   const [verifiedOtp, setVerifiedOtp] = useState(false);
   const [showEmptyCartError, setShowEmptyCartError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -31,24 +31,9 @@ export default function Cart() {
     calculateTotalPrice(storedCartItems);
   }, []);
 
-  useEffect(() => {
-    const updateCartCount = () => {
-      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-      setCartCount(cartItems.length);
-    };
-
-    updateCartCount();
-    window.addEventListener('cartUpdated', updateCartCount);
-
-    return () => {
-      window.removeEventListener('cartUpdated', updateCartCount);
-    };
-  }, []);
-
   const calculateTotalPrice = (items) => {
     const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const TotalCost = total.toFixed(2);
-    setTotalPrice(TotalCost);
+    setTotalPrice(total.toFixed(2));
   };
 
   const handleQuantityChange = (index, quantity) => {
@@ -68,7 +53,7 @@ export default function Cart() {
     setCartItems(updatedCart);
     calculateTotalPrice(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
-    window.dispatchEvent(new Event('cartUpdated'));
+    window.dispatchEvent(new Event('cartUpdated'))
   };
 
   const handlePlaceOrder = () => {
@@ -81,28 +66,16 @@ export default function Cart() {
   };
 
   const sendOtp = () => {
-    // Add logic to send OTP here
     setOtpSent(true);
   };
 
-  const validateName = (name) => {
-    const nameRegex = /^[a-zA-Z\s]+$/; // Only letters and spaces
-    return nameRegex.test(name);
-  };
+  const validateName = (name) => /^[a-zA-Z\s]+$/.test(name);
 
-  const validatePhoneNumber = (phone) => {
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/; // Exactly 10 digits
-    return phoneRegex.test(phone);
-  };
+  const validatePhoneNumber = (phone) => /^\+?[1-9]\d{1,14}$/.test(phone);
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email format validation
-    return emailRegex.test(email);
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const validateAddress = (address) => {
-    return address.trim() !== ''; // Ensure address is not empty
-  };
+  const validateAddress = (address) => address.trim() !== '';
 
   const handleOtpVerification = async () => {
     const { name, address, phone, email, otp } = userDetails;
@@ -113,7 +86,7 @@ export default function Cart() {
     }
 
     if (!validatePhoneNumber(phone)) {
-      setErrorMessage("Please enter a valid 10-digit phone number.");
+      setErrorMessage("Please enter a valid phone number.");
       return;
     }
 
@@ -127,7 +100,7 @@ export default function Cart() {
       return;
     }
 
-    if (otp !== "1234") { // Replace with actual OTP verification logic
+    if (otp !== "1234") {
       setErrorMessage("Invalid OTP.");
       return;
     }
@@ -135,7 +108,6 @@ export default function Cart() {
     setVerifiedOtp(true);
     setErrorMessage('');
 
-    // Automatically place the order after OTP verification
     const orderData = {
       items: cartItems,
       total: totalPrice,
@@ -149,149 +121,141 @@ export default function Cart() {
       localStorage.removeItem('cart');
       setShowModal(false);
       alert("Order placed successfully!");
-      window.dispatchEvent(new Event('cartUpdated'));
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
 
   return (
-    <section className="h-100 h-custom" style={{ backgroundColor: "#BDF6FE", minHeight: "100vh" }}>
+    <section className="cart-section" style={{ backgroundColor: "#BDF6FE", minHeight: "100vh" }}>
       <CollapsibleExample />
-      <div className="container h-100 py-5">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col">
-            <div className="card shopping-cart glass">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-lg-12 px-5 py-4">
-                    <h3 className="mb-5 pt-2 text-center fw-bold text-uppercase">Your products</h3>
-
-                    {cartItems.map((item, index) => (
-                      <div className="cart-item" key={index}>
-                        <div className="flex-shrink-0">
-                          <img src={item.img} className="img-fluid" alt={item.name} />
-                        </div>
-                        <div className="cart-item-details">
-                          <a href="#!" className="remove-btn" onClick={() => handleRemoveItem(index)}>
-                            <i className="fas fa-times"></i>
-                          </a>
-                          <h5 className="text-primary">{item.name}</h5>
-                          <h6>{item.description}</h6>
-                          <div className="d-flex align-items-center">
-                            <p className="fw-bold mb-0 me-5 pe-3">${item.price}</p>
-                            <div className="quantity-controls">
-                              <button
-                                onClick={() => handleQuantityChange(index, item.quantity - 1)}
-                              >
-                                <FaMinus />
-                              </button>
-                              <input
-                                className="quantity"
-                                min="0"
-                                name="quantity"
-                                value={item.quantity}
-                                type="number"
-                                onChange={(e) => handleQuantityChange(index, Number(e.target.value))}
-                              />
-                              <button
-                                onClick={() => handleQuantityChange(index, item.quantity + 1)}
-                              >
-                                <FaPlus />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-
-                    <hr className="mb-4" />
-
-                    <div className="total-section">
-                      <h5 className="fw-bold mb-0">Total:</h5>
-                      <h5 className="fw-bold mb-0">${totalPrice}</h5>
+      <div className="container py-5">
+        <h2 className="text-center mb-4">Your Cart</h2>
+        <div className="row">
+          <div className="col-lg-8">
+            <div className="cart-items">
+              {cartItems.map((item, index) => (
+                <div className="cart-item d-flex justify-content-between align-items-center mb-3" key={index}>
+                  <div className="d-flex align-items-center">
+                    <img src={item.img} className="img-fluid" alt={item.name} style={{ width: '80px' }} />
+                    <div className="ms-3">
+                      <h5 className="text-dark mb-1">{item.name}</h5>
+                      <small className="text-muted">{item.description}</small>
                     </div>
-
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-block btn-lg"
-                      onClick={handlePlaceOrder}
-                    >
-                      Place Order
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <span className="text-muted">${item.price}</span>
+                    <div className="quantity-controls ms-3 d-flex align-items-center">
+                      <button className="btn btn-light" onClick={() => handleQuantityChange(index, item.quantity - 1)}>
+                        <FaMinus />
+                      </button>
+                      <input
+                        className="form-control text-center"
+                        style={{ width: '50px', margin: '0 10px' }}
+                        value={item.quantity}
+                        onChange={(e) => handleQuantityChange(index, Number(e.target.value))}
+                      />
+                      <button className="btn btn-light" onClick={() => handleQuantityChange(index, item.quantity + 1)}>
+                        <FaPlus />
+                      </button>
+                    </div>
+                    <span className="text-muted ms-3">${(item.price * item.quantity).toFixed(2)}</span>
+                    <button className="btn btn-danger ms-3" onClick={() => handleRemoveItem(index)}>
+                      <i className="fas fa-times"></i>
                     </button>
-
-                    <Modal show={showModal} onHide={() => setShowModal(false)} className="modal-content">
-                      <Modal.Header closeButton>
-                        <Modal.Title>Enter Your Details</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <input
-                          type="text"
-                          placeholder="Name"
-                          value={userDetails.name}
-                          onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
-                          className="form-control mb-3"
-                        />
-                        <PhoneInput
-                          type="text"
-                          placeholder="Phone number"
-                          value={userDetails.phone}
-                          onChange={(value) => setUserDetails({ ...userDetails, phone: value })}
-                          className="form-control mb-3"
-                        />
-                        <input
-                          type="email"
-                          placeholder="Email"
-                          value={userDetails.email}
-                          onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
-                          className="form-control mb-3"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Address"
-                          value={userDetails.address}
-                          onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
-                          className="form-control mb-3"
-                        />
-                        {otpSent && (
-                          <input
-                            type="text"
-                            placeholder="Enter OTP"
-                            value={userDetails.otp}
-                            onChange={(e) => setUserDetails({ ...userDetails, otp: e.target.value })}
-                            className="form-control mb-3"
-                          />
-                        )}
-                        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowModal(false)}>
-                          Close
-                        </Button>
-                        {!otpSent ? (
-                          <Button variant="primary" onClick={sendOtp}>
-                            Send OTP
-                          </Button>
-                        ) : (
-                          <Button variant="primary" onClick={handleOtpVerification}>
-                            Verify OTP and Place Order
-                          </Button>
-                        )}
-                      </Modal.Footer>
-                    </Modal>
-
-                    {showEmptyCartError && (
-                      <div className="alert alert-danger">
-                        Your cart is empty. Please add items before placing an order.
-                      </div>
-                    )}
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">Order Summary</h5>
+                <div className="d-flex justify-content-between">
+                  <span>Subtotal</span>
+                  <span>${totalPrice}</span>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <span>Shipping</span>
+                  <span>Free</span>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <strong>Total</strong>
+                  <strong>${totalPrice}</strong>
+                </div>
+                <button className="btn btn-primary w-100 mt-3" onClick={handlePlaceOrder}>
+                  Checkout
+                </button>
+                {showEmptyCartError &&(
+        <div className="alert alert-danger mt-2" role="alert">
+          Your cart is empty!
+        </div>
+      )}
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Your Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            placeholder="Name"
+            value={userDetails.name}
+            onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+            className="form-control mb-3"
+          />
+          <PhoneInput
+            placeholder="Phone number"
+            value={userDetails.phone}
+            onChange={(value) => setUserDetails({ ...userDetails, phone: value })}
+            className="form-control mb-3"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={userDetails.email}
+            onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+            className="form-control mb-3"
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            value={userDetails.address}
+            onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
+            className="form-control mb-3"
+          />
+          {otpSent && (
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={userDetails.otp}
+              onChange={(e) => setUserDetails({ ...userDetails, otp: e.target.value })}
+              className="form-control mb-3"
+            />
+          )}
+          {!otpSent && (
+            <button className="btn btn-secondary w-100" onClick={sendOtp}>
+              Send OTP
+            </button>
+          )}
+          {errorMessage && <p className="text-danger mt-2">{errorMessage}</p>}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleOtpVerification} disabled={!otpSent}>
+            {verifiedOtp ? 'Place Order' : 'Verify OTP'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+     
     </section>
   );
 }

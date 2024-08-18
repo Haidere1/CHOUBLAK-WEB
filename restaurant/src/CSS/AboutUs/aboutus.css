@@ -1,4 +1,4 @@
-.about_main
+/* .about_main
 {
     height: auto;
     display: grid;
@@ -355,4 +355,221 @@ color: white;
     border-radius: 20px;
     border:1px solid rgba(255, 255, 255, 0.801);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+} */
+
+.about-us {
+    font-family: Arial, sans-serif;
+    color: white;
+    background-color: #000;
+    font-family: 'Jovelyn Blur Demo';
+}
+
+.hero {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: inherit;
+    filter: blur(4px); /* Adjust the blur level here */
+    z-index: 1; /* Ensure it stays behind other content */
+  }
+
+.hero .overlay {
+    background-color: rgba(96, 250, 252, 0.6);
+    z-index: 2;
+    padding: 20px 100px;
+    text-align: center;
+}
+
+.about-description .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px 20px;
+    text-align: left;
+}
+
+.about-description .content {
+    flex: 1;
+    padding: 20px;
+}
+
+.about-description .image {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-description img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.contact-button {
+    background-color: #ff7f50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.contact-button:hover {
+    background-color: #ff5722;
+}
+
+.skills-section {
+    background-color: #111;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.skills-section .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.skill {
+    margin: 20px 0;
+}
+
+.skill h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.progress-bar {
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 10px;
+    background-color: #ff7f50;
+    border-radius: 10px 0 0 10px;
+}
+
+.achievements-section {
+    
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(55, 255, 238, 0.5), rgba(245, 250, 247, 0.783));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border:1px solid rgba(255, 255, 255, 0.801);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    color: rgb(0, 0, 0);
+}
+
+.achievements-section .container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.achievement {
+    flex: 1;
+    min-width: 200px;
+    margin: 20px;
+}
+
+.achievement h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.hire-us-section {
+    background-size: cover;
+    background-position: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hire-us-section .overlay {
+    background-color: rgba(72, 252, 228, 0.7);
+    padding: 30px;
+}
+
+.get-started-button {
+    background-color: #ff7f50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.get-started-button:hover {
+    background-color: #e84b1b;
+}
+
+@media (max-width: 768px) {
+    .about-description .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .achievements-section .container {
+        flex-direction: column;
+    }
+}
+
+.map-section {
+    padding: 50px 0;
+    background-color: transparent;
+}
+
+.map-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.map-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 10px;
 }
