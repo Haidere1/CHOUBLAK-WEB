@@ -13,10 +13,12 @@ background-color: #BDF6FE;
     margin-top: 5vh;
     height: 80vh;
     width: auto;
-
     display: flex;
 
 }
+
+
+
 .section
 {
 
@@ -47,10 +49,13 @@ background-color: #BDF6FE;
 
 .section img
 {
-    border-radius: 20vh;
+    border-radius: 60px;
     width: 70%;
     max-height:100%;
     margin-left: 30%;
+    box-shadow: 9px 8px 30px 6px white;
+    animation: rotateShadow 5s infinite linear;
+   
 }
 /*mobile dev res*/
 
@@ -89,7 +94,7 @@ background-color: #BDF6FE;
   }
   .section img
   {
-      border-radius: 15vh;
+      border-radius: 50px;
       width: 70%;
       max-height:100%;
       margin-left: 30%;
@@ -133,7 +138,7 @@ background-color: #BDF6FE;
   }
   .section img
   {
-      border-radius: 12vh;
+      border-radius: 45px;
       width: 80%;
       max-height:100%;
       margin-left: 30%;
@@ -163,7 +168,7 @@ background-color: #BDF6FE;
 .section h1
 {
     text-align: left;
-    font-size: large;
+    font-size: medium;
     margin-left: -20vw;
     color: rgba(255, 255, 251, 0.995); 
     text-shadow: 2px 2px 4px rgb(77, 60, 12);
@@ -177,7 +182,7 @@ background-color: #BDF6FE;
 }
 .section img
 {
-    border-radius: 8vh;
+    border-radius: 25px;
     width: 70%;
     max-height:100%;  
     margin-left: 30%;
