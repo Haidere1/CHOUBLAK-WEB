@@ -6,7 +6,8 @@ import BasicExample from './Components/Home/MenuPage.js';
 //import CollapsibleExample from './Components/Home/tabbar.js';
 import { Route,Routes } from 'react-router-dom';
 //import ViewProduct from './Components/Products/viewproduct.js';
-import Cart from './Components/Cart/cart.js';
+import Cart from './Components/Cart/cart2.js';
+import './CSS/App.css'
 
 function App() {
   
