@@ -200,76 +200,79 @@ export default function Cart() {
       </div>
       </div>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Order</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="form-group">
-            <label>Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={userDetails.name}
-              onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
-            />
-          </div>
-          <div className="form-group">
-            <label>Address</label>
-            <input
-              type="text"
-              className="form-control"
-              value={userDetails.address}
-              onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone</label>
-            <PhoneInput
-              international
-              country="US"
-              value={userDetails.phone}
-              onChange={(phone) => setUserDetails({ ...userDetails, phone })}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              className="form-control"
-              value={userDetails.email}
-              onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
-            />
-          </div>
-          {otpSent && (
-            <div className="form-group">
-              <label>OTP</label>
-              <input
-                type="text"
-                className="form-control"
-                value={userDetails.otp}
-                onChange={(e) => setUserDetails({ ...userDetails, otp: e.target.value })}
-              />
-            </div>
-          )}
-          {errorMessage && (
-            <div className="alert alert-danger mt-2">{errorMessage}</div>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          {!otpSent && (
-            <Button variant="primary" onClick={sendOtp}>
-              Send OTP
-            </Button>
-          )}
-          {otpSent && (
-            <Button variant="success" onClick={handleOtpVerification}>
-              Verify OTP and Place Order
-            </Button>
-          )}
-        </Modal.Footer>
-      </Modal>
+      <Modal show={showModal} onHide={() => setShowModal(false)} className="haiti-modal">
+  <Modal.Header closeButton>
+    <Modal.Title>Confirm Order</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <div className="form-group">
+      <label>Name</label>
+      <input
+        type="text"
+        className="form-control"
+        value={userDetails.name}
+        onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+      />
+    </div>
+    <div className="form-group">
+      <label>Address</label>
+      <input
+        type="text"
+        className="form-control"
+        value={userDetails.address}
+        onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
+      />
+    </div>
+    <div className="form-group">
+      <label>Phone</label>
+      <div className="phone-input-container">
+        <PhoneInput
+          international
+          country="US"
+          value={userDetails.phone}
+          onChange={(phone) => setUserDetails({ ...userDetails, phone })}
+          className="form-control"
+        />
+      </div>
+    </div>
+    <div className="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        className="form-control"
+        value={userDetails.email}
+        onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+      />
+    </div>
+    {otpSent && (
+      <div className="form-group">
+        <label>OTP</label>
+        <input
+          type="text"
+          className="form-control"
+          value={userDetails.otp}
+          onChange={(e) => setUserDetails({ ...userDetails, otp: e.target.value })}
+        />
+      </div>
+    )}
+    {errorMessage && (
+      <div className="alert alert-danger mt-2">{errorMessage}</div>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    {!otpSent && (
+      <Button variant="primary" onClick={sendOtp}>
+        Send OTP
+      </Button>
+    )}
+    {otpSent && (
+      <Button variant="success" onClick={handleOtpVerification}>
+        Verify OTP and Place Order
+      </Button>
+    )}
+  </Modal.Footer>
+</Modal>
+
       <Footer/>
     </section>
   );

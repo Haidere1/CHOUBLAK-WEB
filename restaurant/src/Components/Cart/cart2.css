@@ -1,10 +1,9 @@
 /* General Styles */
-body {
-    margin: 0;
-    padding: 0;
+.cart-section
+  {
     background-color: #BDF6FE;
-  }
-  
+    font-family: 'Jovelyn Blur Demo';
+}
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -146,6 +145,171 @@ body {
   .modal-body input {
     margin-bottom: 15px;
   }
+ /* Add this CSS to your styles file (e.g., App.css or custom CSS file) */
+
+/* Wrapper for the PhoneInput to ensure it takes full width */
+.phone-input-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  /* Base styling for the PhoneInput */
+  .phone-input-container .PhoneInput {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Jovelyn Blur Demo', sans-serif; /* Use your chosen font */
+  }
+  
+  /* Styling for the input field */
+  .phone-input-container .PhoneInputInput {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    margin-left: 10px;
+    font-family: inherit;
+  }
+  
+  /* Styling for the dropdown flag button */
+  .phone-input-container .PhoneInputCountry {
+    border-right: 1px solid #ddd;
+    padding-right: 10px;
+  }
+  
+  /* Hover effect */
+  .phone-input-container .PhoneInput:hover {
+    border-color: #007bff;
+  }
+  
+  /* Focus effect */
+  .phone-input-container .PhoneInput:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  }
+  
+  /* Adjusting the dropdown button appearance */
+  .phone-input-container .PhoneInputCountrySelect {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* Styling for the dropdown flag and arrow */
+  .phone-input-container .PhoneInputCountryIcon {
+    margin-right: 8px;
+  }
+  
+  .phone-input-container .PhoneInputCountrySelectArrow {
+    color: #333;
+    margin-left: 5px;
+  }
+/* Haiti-Themed Modal Styles */
+.haiti-modal .modal-content {
+  background-color: transparent; /* Light background for a clean look */
+  border: none;
+  color: #333; /* Text color */
+  font-family: 'Jovelyn Blur Demo', sans-serif; /* Apply the desired font */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.haiti-modal .modal-header {
+  background: linear-gradient(to right, #0decf8, #f4f5f5); /* Haitian flag colors */
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  color: #fff;
+}
+
+.haiti-modal .modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.haiti-modal .modal-header .close {
+  color: #fff;
+  opacity: 1;
+}
+
+.haiti-modal .modal-body {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    border:1px solid rgba(255, 255, 255, 0.801);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  overflow: hidden;
+}
+
+.haiti-modal .form-group label {
+  font-weight: bold;
+  color: #000000; /* Blue from the Haitian flag */
+}
+
+.haiti-modal .form-control {
+  border-radius: 5px;
+  border: 1px solid #21d3b5; /* Red from the Haitian flag */
+  font-family: inherit;
+  color: #333;
+}
+
+.haiti-modal .phone-input-container .PhoneInput {
+  border: 1px solid #23edc5;
+}
+
+.haiti-modal .phone-input-container .PhoneInputInput {
+  border-radius: 5px;
+}
+
+.haiti-modal .modal-footer {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    border:1px solid rgba(255, 255, 255, 0.801);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-top: none;
+  padding-top: 20px;
+}
+
+.haiti-modal .btn-primary {
+  background-color: #14eefa;
+  border-color: #00209f;
+  font-weight: bold;
+  width: 100%;
+}
+
+.haiti-modal .btn-primary:hover {
+  background-color: #32fd4a;
+  border-color: #001970;
+}
+
+.haiti-modal .btn-success {
+  background-color: #22feec;
+  border-color: #10bfd2;
+  font-weight: bold;
+  width: 100%;
+}
+
+.haiti-modal .btn-success:hover {
+  background-color: #58ff2a;
+  border-color: #0eb511;
+}
+
+.haiti-modal .alert-danger {
+  background-color: #ffdddd;
+  color: #d21034;
+  border-color: #d21034;
+  border-radius: 5px;
+}
   
   /* Responsive Styles */
   @media (max-width: 768px) {
