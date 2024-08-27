@@ -2,27 +2,27 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import '../../CSS/navstyle.css';
 import logo from '../../background/logo.png';
 import { FaBars } from 'react-icons/fa';
 
 function CollapsibleExample() {
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
 
-  useEffect(() => {
-    const updateCartCount = () => {
-      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-      setCartCount(cartItems.length);
-    };
+  // useEffect(() => {
+  //   const updateCartCount = () => {
+  //     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  //     setCartCount(cartItems.length);
+  // //   };
 
-    updateCartCount();
-    window.addEventListener('cartUpdated', updateCartCount);
+  //   updateCartCount();
+  //   window.addEventListener('cartUpdated', updateCartCount);
 
-    return () => {
-      window.removeEventListener('cartUpdated', updateCartCount);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('cartUpdated', updateCartCount);
+  //   };
+  // }, []);
 
   return (
     <Navbar
