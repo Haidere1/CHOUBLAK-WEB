@@ -1,8 +1,12 @@
 /* General Styles */
+body
+{
+  background-color: #BDF6FE;
+}
 .cart-section
-  {
-    background-color: #BDF6FE;
-    font-family: 'Jovelyn Blur Demo';
+{
+  background-color: #BDF6FE;
+  min-height: 100vh;
 }
   .container {
     max-width: 1200px;

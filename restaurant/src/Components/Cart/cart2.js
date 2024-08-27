@@ -52,6 +52,7 @@ export default function Cart() {
   const handleRemoveItem = (index) => {
     const updatedCart = cartItems.filter((_, i) => i !== index);
     setCartItems(updatedCart);
+
     calculateTotalPrice(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('cartUpdated'))
@@ -143,8 +144,10 @@ export default function Cart() {
                 <div className="cart-item" key={index}>
                   <img src={item.img} className="img-fluid" alt={item.name} />
                   <div className="cart-item-details">
-                    <h5>{item.name}</h5>
-                    <small className="text-muted">{item.description}</small>
+                    <h5><b>Name: {item.name}</b></h5>
+                    <small className="text-muted"><b>Description:</b> {item.description}</small>
+                    
+                    <small className="text-muted"><b>Option:</b> {item.option}</small>
                     <div className="quantity-controls">
                       <button className="btn btn-light" onClick={() => handleQuantityChange(index, item.quantity - 1)}>
                         <FaMinus />

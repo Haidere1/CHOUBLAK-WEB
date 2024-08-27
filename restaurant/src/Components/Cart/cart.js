@@ -144,6 +144,7 @@ export default function Cart() {
                     <div className="ms-3">
                       <h5 className="text-dark mb-1">{item.name}</h5>
                       <small className="text-muted">{item.description}</small>
+                      <small className="text-muted">{item.description}</small>
                     </div>
                   </div>
                   <div className="d-flex align-items-center">

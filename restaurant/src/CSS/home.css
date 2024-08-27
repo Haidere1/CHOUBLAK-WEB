@@ -5,7 +5,7 @@
 height: auto;
 background: fixed;
 background-size: cover;
-font-family: 'Jovelyn Blur Demo';
+/* font-family: 'Jovelyn Blur Demo'; */
 background-color: #BDF6FE;
 }
 .firstsection
@@ -154,13 +154,17 @@ background-color: #BDF6FE;
     height: 100vh;
     width: auto;
     display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
 }
 .section
 {
+  margin-top: 100px;
     flex: 1;
     display: flex;
     text-align: center;
-    justify-content: center;
+    justify-content: center,top;
     align-items: center;
    flex-direction: column;
 }
@@ -168,6 +172,7 @@ background-color: #BDF6FE;
 {
     text-align: left;
     margin-left: -15vw;
+    margin-top: 10vh;
     font-size: large;
     color: rgba(255, 255, 251, 0.995); 
     text-shadow: 2px 2px 4px rgb(77, 60, 12);
@@ -890,19 +895,19 @@ background-color: antiquewhite;
   }
 
   .carouseldiv {
-    height: 50vh;
+    height: 100%;
     width: 90%;
     box-shadow: none;
   }
 
   .am_container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
   }
 
   .am_c_1 {
-    margin-top: 20px;
+    margin-top: 0px;
     background-color: white;
     text-align: center;
   }

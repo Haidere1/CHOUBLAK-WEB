@@ -2,16 +2,33 @@ import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { storage, db } from '../Firebase/config.js';
+import '../CSS/addproduct.css';
 import styled from 'styled-components';
+import CollapsibleExample from "./navbar.js";
 
 export const AddProduct = () => {
   const types = ['image/png', 'image/jpeg'];
   const [productName, setProductName] = useState('');
   const [productDescription, setProductDescription] = useState('');
+  const [optionsCount, setOptionsCount] = useState(1);
+  const [options, setOptions] = useState([{ value: '' }]);
   const [productPrice, setProductPrice] = useState(0);
   const [productImg, setProductImg] = useState(null);
   const [category, setCategory] = useState('Mains');
   const [error, setError] = useState('');
+
+  const handleOptionsChange = (index, event) => {
+    const newOptions = [...options];
+    newOptions[index].value = event.target.value;
+    setOptions(newOptions);
+  };
+
+  const handleOptionsCountChange = (event) => {
+    const count = parseInt(event.target.value);
+    setOptionsCount(count);
+    const newOptions = Array.from({ length: count }, (_, i) => options[i] || { value: '' });
+    setOptions(newOptions);
+  };
 
   const productImgeHandler = (e) => {
     let selectedFile = e.target.files[0];
@@ -29,6 +46,10 @@ export const AddProduct = () => {
 
     if (!productImg) {
       setError('No image selected.');
+      return;
+    }
+    if(productPrice <= 0) {
+      setError("The price should hold a positive non-zero Value!");
       return;
     }
 
@@ -51,7 +72,8 @@ export const AddProduct = () => {
             ProductDescription: productDescription,
             ProductPrice: productPrice,
             ProductImg: url,
-            Category: category
+            Category: category,
+            Options: options.map(opt => opt.value)
           })
           .then(() => {
             setProductName('');
@@ -59,6 +81,8 @@ export const AddProduct = () => {
             setProductPrice(0);
             setProductImg(null);
             setCategory('Mains');
+            setOptions([{ value: '' }]);
+            setOptionsCount(1);
             setError('');
             document.getElementById("file").value = '';
             alert("UPLOAD COMPLETE")
@@ -70,53 +94,76 @@ export const AddProduct = () => {
   };
 
   return (
-    <Container>
-      <FormTitle>Add New Product</FormTitle>
-      <StyledForm onSubmit={addProduct}>
-        <Label>Product Name</Label>
-        <StyledInput
-          type="text"
-          required
-          onChange={(e) => setProductName(e.target.value)}
-          value={productName}
-        />
+    <div className="main_container">
+      <CollapsibleExample/>
+      <Container className="glass addproduct">
+        <FormTitle>Add New Product</FormTitle>
+        <StyledForm onSubmit={addProduct}>
+          <Label>Product Name</Label>
+          <StyledInput
+            type="text"
+            required
+            onChange={(e) => setProductName(e.target.value)}
+            value={productName}
+          />
+          <Label>Product Description</Label>
+          <StyledInput
+            type="text"
+            required
+            onChange={(e) => setProductDescription(e.target.value)}
+            value={productDescription}
+          />
 
-        <Label>Product Description</Label>
-        <StyledInput
-          type="text"
-          required
-          onChange={(e) => setProductDescription(e.target.value)}
-          value={productDescription}
-        />
+          <Label>Product Price</Label>
+          <StyledInput
+            type="number"
+            required
+            onChange={(e) => setProductPrice(e.target.value)}
+            value={productPrice}
+          />
 
-        <Label>Product Price</Label>
-        <StyledInput
-          type="number"
-          required
-          onChange={(e) => setProductPrice(e.target.value)}
-          value={productPrice}
-        />
+          <Label>Category</Label>
+          <StyledSelect
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="Mains">Mains</option>
+            <option value="Sides">Sides</option>
+          </StyledSelect>
 
-        <Label>Category</Label>
-        <StyledSelect
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="Mains">Mains</option>
-          <option value="Sides">Sides</option>
-        </StyledSelect>
+          <Label>Number of Options</Label>
+          <StyledSelect
+            value={optionsCount}
+            onChange={handleOptionsCountChange}
+          >
+            {[...Array(5)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>{i + 1}</option>
+            ))}
+          </StyledSelect>
+          
+          {options.map((option, index) => (
+            <div key={index}>
+              <Label>Option {index + 1}</Label>
+              <StyledInput
+                type="text"
+                value={option.value}
+                onChange={(e) => handleOptionsChange(index, e)}
+              />
+            </div>
+          ))}
 
-        <Label>Product Image</Label>
-        <StyledInput
-          type="file"
-          onChange={productImgeHandler}
-          id="file"
-        />
+          <Label>Product Image</Label>
+          <StyledInput
+            type="file"
+            onChange={productImgeHandler}
+            id="file"
+          />
 
-        <StyledButton type="submit">Add Product</StyledButton>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-      </StyledForm>
-    </Container>
+          <StyledButton type="submit">Add Product</StyledButton>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </StyledForm>
+      </Container>
+    </div>
   );
 };
 
@@ -127,14 +174,21 @@ const Container = styled.div`
   padding: 20px;
   background: #f9f9f9;
   border-radius: 8px;
+  overflow-y:scroll;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.801);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 `;
 
 const FormTitle = styled.h2`
   text-align: center;
-  color: #333;
+  color: green;
   margin-bottom: 20px;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Jovelyn Blur Demo';
 `;
 
 const StyledForm = styled.form`
@@ -173,15 +227,16 @@ const StyledSelect = styled.select`
 `;
 
 const StyledButton = styled.button`
-  padding: 10px;
+  background-color: #e91e63;
+  color: white;
+  font-size: 0.9em;
+  padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  background-color: #28a745;
-  color: #fff;
-  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
   &:hover {
-    background-color: #218838;
+    background-color: #d81b60;
   }
 `;
 
@@ -191,3 +246,5 @@ const ErrorMessage = styled.span`
   margin-top: 10px;
   text-align: center;
 `;
+
+export default AddProduct;

@@ -358,10 +358,9 @@ color: white;
 } */
 
 .about-us {
-    font-family: Arial, sans-serif;
     color: white;
     background-color: #000;
-    font-family: 'Jovelyn Blur Demo';
+    
 }
 
 .hero {
@@ -423,7 +422,7 @@ color: white;
 }
 
 .contact-button {
-    background-color: #ff7f50;
+    background-color: red;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -434,11 +433,12 @@ color: white;
 }
 
 .contact-button:hover {
-    background-color: #ff5722;
+    background-color:green;
 }
 
 .skills-section {
-    background-color: #111;
+    background-color: rgba(96, 250, 252, 0.6);
+    color: black;
     padding: 40px 20px;
     text-align: center;
 }
@@ -458,14 +458,14 @@ color: white;
 }
 
 .progress-bar {
-    background-color: #333;
+    background-color: #fdfdfd;
     border-radius: 10px;
     overflow: hidden;
 }
 
 .progress {
     height: 10px;
-    background-color: #ff7f50;
+    background-color: #f7eb09;
     border-radius: 10px 0 0 10px;
 }
 

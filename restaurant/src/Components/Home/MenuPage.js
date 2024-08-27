@@ -53,7 +53,7 @@ const IconText = styled.span`
   transition: opacity 0.3s ease;
 `;
 const MainMenu = styled.div`
-  font-family: 'Jovelyn Blur Demo';
+  
   background-color:#BDF6FE;
 `;
 
