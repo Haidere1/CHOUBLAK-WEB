@@ -245,7 +245,7 @@ const ProductModal = ({ item, onClose }) => {
               {error}
             </SuccessMessage>
           )}
-          { error=='Item already in the cart' && (
+          { error === 'Item already in the cart' && (
             <SuccessMessage>
               {error}
             </SuccessMessage>

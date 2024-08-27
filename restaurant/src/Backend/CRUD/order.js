@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc,  } from 'firebase/firestore';
 import { db } from '../../Backend/Firebase/config';
 import CollapsibleExample from './navbar';
 
@@ -66,21 +66,21 @@ const StatusSelect = styled.select`
   font-size: 1em;
 `;
 
-const Button = styled.button`
-  background-color: #e91e63;
-  color: white;
-  font-size: 0.9em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
+// const Button = styled.button`
+//   background-color: #e91e63;
+//   color: white;
+//   font-size: 0.9em;
+//   padding: 8px 16px;
+//   border: none;
+//   border-radius: 4px;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+//   margin-top: 10px;
 
-  &:hover {
-    background-color: #d81b60;
-  }
-`;
+//   &:hover {
+//     background-color: #d81b60;
+//   }
+// `;
 
 const AdminPanelPage = () => {
   const [orders, setOrders] = useState([]);
