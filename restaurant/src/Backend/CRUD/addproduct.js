@@ -67,14 +67,17 @@ export const AddProduct = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          addDoc(collection(db, 'Products'), {
+          const productData = {
             ProductName: productName,
             ProductDescription: productDescription,
             ProductPrice: productPrice,
             ProductImg: url,
             Category: category,
-            Options: options.map(opt => opt.value)
-          })
+          };
+          if (category === 'Mains') {
+            productData.Options = options.map(opt => opt.value);
+          }
+          addDoc(collection(db, 'Products'), productData)
           .then(() => {
             setProductName('');
             setProductDescription('');
@@ -105,7 +108,7 @@ export const AddProduct = () => {
             required
             onChange={(e) => setProductName(e.target.value)}
             value={productName}
-          />
+            />
           <Label>Product Description</Label>
           <StyledInput
             type="text"
@@ -130,7 +133,9 @@ export const AddProduct = () => {
             <option value="Mains">Mains</option>
             <option value="Sides">Sides</option>
           </StyledSelect>
+        {category === 'Mains' && (
 
+          <div>
           <Label>Number of Options</Label>
           <StyledSelect
             value={optionsCount}
@@ -138,7 +143,8 @@ export const AddProduct = () => {
           >
             {[...Array(5)].map((_, i) => (
               <option key={i + 1} value={i + 1}>{i + 1}</option>
-            ))}
+            ))};
+
           </StyledSelect>
           
           {options.map((option, index) => (
@@ -151,6 +157,11 @@ export const AddProduct = () => {
               />
             </div>
           ))}
+
+          </div>
+        )
+      }       
+
 
           <Label>Product Image</Label>
           <StyledInput

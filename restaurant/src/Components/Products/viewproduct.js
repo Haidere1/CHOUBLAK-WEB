@@ -177,6 +177,7 @@ const ProductModal = ({ item, onClose }) => {
   const addToCart = () => {
     if (!selectedOption && item.Options != null) {
       alert('Please select an option');
+      console.log(item.Options);
       return;
     }
 
@@ -218,7 +219,7 @@ const ProductModal = ({ item, onClose }) => {
           <ModalDescription>{item.ProductDescription}</ModalDescription>
           <ModalPrice>${item.ProductPrice}</ModalPrice>
           
-          {item.Options && item.Options.length > 0 && (
+          {item.Options && item.Options.length >= 1 && (
             <>
               <h3>Options</h3>
               <ModalOptions>
@@ -231,8 +232,11 @@ const ProductModal = ({ item, onClose }) => {
                         value={option}
                         onChange={() => setSelectedOption(option)}
                       />
+
                       {option}
+                    
                     </OptionLabel>
+                   
                   </ModalOption>
                 ))}
               </ModalOptions>

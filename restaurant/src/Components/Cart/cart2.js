@@ -146,8 +146,11 @@ export default function Cart() {
                   <div className="cart-item-details">
                     <h5><b>Name: {item.name}</b></h5>
                     <small className="text-muted"><b>Description:</b> {item.description}</small>
-                    
-                    <small className="text-muted"><b>Option:</b> {item.option}</small>
+                    {item.option &&(
+
+                      <small className="text-muted"><b>Option:</b> {item.option}</small>
+
+                    )}
                     <div className="quantity-controls">
                       <button className="btn btn-light" onClick={() => handleQuantityChange(index, item.quantity - 1)}>
                         <FaMinus />
