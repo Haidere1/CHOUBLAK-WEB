@@ -1,5 +1,5 @@
 import React from 'react';
-import '../CSS/Home/about.css';
+import '../../CSS/Home/about.css';
 import { Link } from 'react-router-dom';
 
 const AboutSection = () => {

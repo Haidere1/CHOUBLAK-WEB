@@ -7,7 +7,7 @@ import midfood from '../../background/midfood.jpg';
 import show1 from '../../background/haitifood1.jpeg';
 import CarouselEx from "./carousel.js";
 import Footer from './footer.js';
-import AboutSection from '../about.js';
+import AboutSection from './about.js';
 import MenuSection from '../menu/menu.js';
 import { Link } from 'react-router-dom';
 import CollapsibleExample from './tabbar.js';
