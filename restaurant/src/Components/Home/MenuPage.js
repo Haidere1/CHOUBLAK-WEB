@@ -237,7 +237,7 @@ function BasicExample() {
           {mains.map((item, index) => (
             <MenuCard key={index}>
               <ImageContainer>
-                <ProductImage src={item.ProductImg} alt={item.ProductName} />
+                <ProductImage src={item.ProductImg} alt='Mains' />
               </ImageContainer>
               <ProductTitle>{item.ProductName}</ProductTitle>
               <ProductDescription>{item.ProductDescription}</ProductDescription>
@@ -251,7 +251,7 @@ function BasicExample() {
           {sides.map((item, index) => (
             <MenuCard key={index}>
               <ImageContainer>
-                <ProductImage src={item.ProductImg} alt={item.ProductName} />
+                <ProductImage src={item.ProductImg} alt='Sides' />
               </ImageContainer>
               <ProductTitle>{item.ProductName}</ProductTitle>
               <ProductDescription>{item.ProductDescription}</ProductDescription>

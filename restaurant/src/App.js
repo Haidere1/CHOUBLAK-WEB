@@ -12,6 +12,7 @@ import Cart from './Components/Cart/cart2.js';
 import './CSS/App.css'
 import Login from './Components/Admin/login.js';
 import OrderPage from './Backend/CRUD/order.js';
+import Protected from './Components/Admin/protected.js';
 
 
 function App() {
@@ -19,16 +20,16 @@ function App() {
   return (
 <Routes>
   
+  {/* <Route path='/' element={<Home/>}></Route> */}
   <Route path='/' element={<Home/>}></Route>
   <Route path='/home' element={<Home/>}></Route>
   <Route path='/menu' element={<BasicExample/>}></Route>
   <Route path='/aboutus' element={<AboutUs/>}></Route>
   <Route path='/cart' element={<Cart/>}></Route>
-  <Route path='/admin/addproduct' element={<AddProduct/>}></Route>
-  <Route path='/admin/update' element={<AdminPanelPage/>}></Route>
-  <Route path='/login' element={<Login/>}></Route>
-  <Route path='/order' element={<OrderPage/>}></Route>
-
+  <Route path='/admin/login' element={<Login/>}></Route>
+  <Route path='/orders' element={<Protected Component={OrderPage}/>}></Route>
+  <Route path='/addproduct' element={<Protected Component={AddProduct}/>}></Route>
+  <Route path='/update' element={<Protected Component={AdminPanelPage}/>}></Route>
 </Routes>
  
   );

@@ -2,28 +2,26 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../Firebase/config';
 import '../../CSS/navstyle.css';
 import logo from '../../background/logo.png';
 import { FaBars } from 'react-icons/fa';
+import { signOut } from 'firebase/auth';
+import { Button } from 'react-bootstrap'; // Importing Button for the new style
 
 function CollapsibleExample() {
-  // const [cartCount, setCartCount] = useState(0);
-
-  // useEffect(() => {
-  //   const updateCartCount = () => {
-  //     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-  //     setCartCount(cartItems.length);
-  // //   };
-
-  //   updateCartCount();
-  //   window.addEventListener('cartUpdated', updateCartCount);
-
-  //   return () => {
-  //     window.removeEventListener('cartUpdated', updateCartCount);
-  //   };
-  // }, []);
-
+  const navigate=useNavigate();
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        navigate('/admin/login');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+  };
+  
   return (
     <Navbar
       collapseOnSelect
@@ -52,19 +50,33 @@ function CollapsibleExample() {
         </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" style={{ alignItems: "center" }}>
-            <Link to='/admin/update' className="nav-link">
-              Manage
+            <Link to='/update' className="nav-link">
+            <Button variant="outline-primary" style={{ marginRight: '10px' }}>
+                Manage
+              </Button>
             </Link>
             
-            <Link to='/admin/addproduct' className="nav-link" style={{ paddingLeft: "0px" }}>
-              Add Product
+            <Link to='/addproduct' className="nav-link" style={{ paddingLeft: "0px" }}>
+            <Button variant="outline-success" style={{ marginRight: '10px' }}>
+                Add Product
+              </Button>            </Link>
+            <Link to="/orders" className="nav-link">
+              <Button variant="outline-danger" style={{ marginRight: '10px' }}>
+                Orders
+              </Button>
             </Link>
           </Nav>
           <Nav style={{ alignItems: "center" }}>
-            <Link to="/home" className="nav-link" style={{ color: "rgb(239,29,41)" }}>
-              Home
+            <Link to="/home" className="nav-link">
+              <Button variant="outline-primary" style={{ marginRight: '10px' }}>
+                Home
+              </Button>
             </Link>
            
+              <Button variant="outline-danger" onClick={handleLogout}>
+                Logout
+              </Button>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

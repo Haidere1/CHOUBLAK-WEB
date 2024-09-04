@@ -1,111 +1,80 @@
-// import vodd from './adminvideo.mp4'
-// import './login.css'
-// // import { createContext, useEffect, useRef, useState } from 'react';
-// // import User from './user';
-// import { Link, useNavigate } from 'react-router-dom';
-// const Login = (e) => {
+import './login.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../Backend/Firebase/config';
+import vodd from './adminvideo.mp4';
 
-//     // useEffect(()=>{
-//     //     function start(){
-//     //         gapi.client.init({
-//     //             clientId:clientId,
-//     //             scope:""
-//     //         })
-//     //     };
-//     //     gapi.load('client:auth2',start)
-//     // });
-//     // const navigate=useNavigate();
-//     // const navigation=()=>
-//     // {
-//     //     navigate("/main")
-//     // }
+const Login = () => { 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); // State to handle error messages
+  const navigate = useNavigate();
 
-    
-//     const [userData,setUserData]=useState(
-//         {
-            
-            
-//             userName:"",
-//             password:"",
-            
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null); // Clear previous errors
 
-//         })
-
-//    const {userName, password} = userData;
-
-//     const handleChange=(e)=>{
-//         console.log("Input Changed")
-//         setUserData({...userData, [e.target.name]: [e.target.value]})
-
-//     }
-
-//     // const userCheck=async()=>{
-
-       
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      // Check if the user is the admin
+      const adminEmail = "syedfizanhaider.fh@gmail.com";
+      if (user.email === adminEmail) {
+        navigate('/addproduct');
+        console.log(user); // Redirect to admin page
+      } else {
+        setError("Unauthorized user. Please use an admin account.");
         
-          
-        
-        
-//     // }
+      }
+    } catch (err) {
+      setError("Invalid email or password. Please try again.");
+    }
+  };
 
-//     return(
+  return (
+    <div style={{fontFamily:"Jovelyn Blur Demo"}}>
+      <div className="menu">
+        <video src={vodd} autoPlay muted loop playsInline className='img'></video>
+      </div>
+      <div className="login glow">
+        <h1>CHOUBLAK RESTAURANT</h1>
+      </div>
+      <div className="input glass">
+        <form onSubmit={handleLogin}>
+          <table>
+            <tr>
+              <td><label><b>Email</b></label></td>
+              <td>
+                <input 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  className='inpt' 
+                  type="email" 
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label><b>Password</b></label></td>
+              <td>
+                <input 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  className='inpt' 
+                  type="password" 
+                  required
+                />
+              </td>
+            </tr>
+          </table>
+          {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
+          <button type="submit" className="btn1">Login</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-//         <div style={{fontFamily:"Jovelyn Blur Demo"}}>
-            
-//     <div className="menu">
-       
-//         <video src={vodd} autoPlay muted loop playsInline className='img'></video>
-        
-//     </div>
-//     <div className="login glow">
-//         <h1>CHOUBLAK RESTAURANT</h1>
-//     </div>
-//     <div className="input glass">
-        
-//         <table>
-//             <tr><td>
-//         <label><b> Username</b></label>
-//     </td>
-//         <td>
-//         <input value={userName} onChange={(e)=>handleChange(e)} 
-//         className='inpt' type="text" name="userName" id=""/>
-//     </td>
-//     </tr>
-
-        
-    
-//     <tr>
-//      <td>
-//     <label><b> Password </b></label>
-//     </td>
-//     <td>
-//         <input value={password} onChange={(e)=>handleChange(e)} className='inpt' type="password" name="password" id=""/>
-//     </td>
-//     </tr>
-//     </table>
-//     <Link to={`/main/${userName} `}>  <button  className="btn1">Login</button></Link>
-//    <div style={{marginTop:"100px"}}>
-  
-   
-//    {/* <Glogout/> */}
-
-//    </div>
-   
-// {/* <div style={{marginTop:"20px"}}>
-// <Appcontext.Provider value={{username}}>
-//      <User/>
-// </Appcontext.Provider>
-// </div> */}
-     
-//     </div>
-    
-
-
-
-   
-
-//         </div>
-//     )
-     
-// };
-// export default Login;
+export default Login;

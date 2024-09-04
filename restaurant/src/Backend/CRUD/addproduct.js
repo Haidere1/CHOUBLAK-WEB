@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
+import { query, where, getDocs } from "firebase/firestore";
 import { storage, db } from '../Firebase/config.js';
 import '../CSS/addproduct.css';
 import styled from 'styled-components';
@@ -41,60 +42,92 @@ export const AddProduct = () => {
     }
   }
 
-  const addProduct = (e) => {
+const addProduct = async (e) => {
     e.preventDefault();
 
-    if (!productImg) {
-      setError('No image selected.');
-      return;
-    }
     if(productPrice <= 0) {
-      setError("The price should hold a positive non-zero Value!");
-      return;
+        setError("The price should hold a positive non-zero Value!");
+        return;
     }
 
-    const storageRef = ref(storage, `product.images/${productImg.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, productImg);
+    try {
+        // Check if the product already exists
+        const productQuery = query(collection(db, 'Products'), where("ProductName", "==", productName));
+        const querySnapshot = await getDocs(productQuery);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-      },
-      (error) => {
-        setError(error.message);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          const productData = {
-            ProductName: productName,
-            ProductDescription: productDescription,
-            ProductPrice: productPrice,
-            ProductImg: url,
-            Category: category,
-          };
-          if (category === 'Mains') {
-            productData.Options = options.map(opt => opt.value);
-          }
-          addDoc(collection(db, 'Products'), productData)
-          .then(() => {
-            setProductName('');
-            setProductDescription('');
-            setProductPrice(0);
-            setProductImg(null);
-            setCategory('Mains');
-            setOptions([{ value: '' }]);
-            setOptionsCount(1);
-            setError('');
-            document.getElementById("file").value = '';
-            alert("UPLOAD COMPLETE")
-          })
-          .catch((error) => setError(error.message));
-        });
-      }
-    );
-  };
+        if (!querySnapshot.empty) {
+            setError("Product already exists.");
+            return;
+        }
+
+        // Proceed with adding the product
+        if (productImg) {
+            const storageRef = ref(storage, `product.images/${productImg.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, productImg);
+
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is ${progress}% done`);
+                },
+                (error) => {
+                    setError(error.message);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        const productData = {
+                            ProductName: productName,
+                            ProductDescription: productDescription,
+                            ProductPrice: productPrice,
+                            ProductImg: url,
+                            Category: category,
+                        };
+                        if (category === 'Mains') {
+                            productData.Options = options.map(opt => opt.value);
+                        }
+                        addProductToFirestore(productData);
+                    });
+                }
+            );
+        } else {
+            const productData = {
+                ProductName: productName,
+                ProductDescription: productDescription,
+                ProductPrice: productPrice,
+                Category: category,
+            };
+            if (category === 'Mains') {
+                productData.Options = options.map(opt => opt.value);
+            }
+            addProductToFirestore(productData);
+        }
+    } catch (error) {
+        setError("Failed to check product existence: " + error.message);
+    }
+};
+
+const addProductToFirestore = (productData) => {
+    addDoc(collection(db, 'Products'), productData)
+        .then(() => {
+            resetForm();
+            alert("UPLOAD COMPLETE");
+        })
+        .catch((error) => setError(error.message));
+};
+
+const resetForm = () => {
+    setProductName('');
+    setProductDescription('');
+    setProductPrice(0);
+    setProductImg(null);
+    setCategory('Mains');
+    setOptions([{ value: '' }]);
+    setOptionsCount(1);
+    setError('');
+    document.getElementById("file").value = '';
+};
+
 
   return (
     <div className="main_container">
