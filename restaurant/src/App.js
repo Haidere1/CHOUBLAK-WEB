@@ -29,7 +29,6 @@ function App() {
   <Route path='/admin/login' element={<Login/>}></Route>
   <Route path='/orders' element={<Protected Component={OrderPage}/>}></Route>
   <Route path='/addproduct' element={<Protected Component={AddProduct}/>}></Route>
-  <Route path='/update' element={<Protected Component={AdminPanelPage}/>}></Route>
 </Routes>
  
   );
