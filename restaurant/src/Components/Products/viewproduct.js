@@ -36,12 +36,10 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: linear-gradient(135deg, #BDF6FE, rgba(154, 225, 225, 0.311));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.801);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1.5px solid rgba(72, 202, 228, 0.2);
+  box-shadow: 0 16px 48px rgba(2, 48, 71, 0.2);
   padding: 20px;
   width: 90%;
   max-width: 600px;
@@ -57,7 +55,7 @@ const ModalContent = styled.div`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #BDF6FE;
+    background-color: #48cae4;
     border-radius: 10px;
   }
 
@@ -67,7 +65,7 @@ const ModalContent = styled.div`
 
   /* Firefox */
   scrollbar-width: thin;
-  scrollbar-color: #BDF6FE transparent;
+  scrollbar-color: #48cae4 transparent;
 `;
 
 const ModalHeader = styled.div`
@@ -80,8 +78,9 @@ const ModalHeader = styled.div`
 `;
 
 const ModalTitle = styled.h2`
-  color: green;
+  color: #023047;
   font-size: 1.5em;
+  font-weight: 800;
   margin: 0;
 `;
 
@@ -90,10 +89,10 @@ const CloseButton = styled.button`
   border: none;
   font-size: 1.5em;
   cursor: pointer;
-  color: #e91e63;
+  color: #f4845f;
 
   &:hover {
-    color: #d81b60;
+    color: #e76f51;
   }
 `;
 
@@ -114,7 +113,7 @@ const ModalDescription = styled.p`
 
 const ModalPrice = styled.p`
   font-size: 1.25em;
-  color: #e91e63;
+  color: #f4845f;
   margin-bottom: 20px;
 `;
 
@@ -126,7 +125,8 @@ const ModalOptions = styled.ul`
 `;
 
 const ModalOption = styled.li`
-  background: rgba(255, 255, 255, 0.6);
+  background: #f0f8ff;
+  border: 1px solid rgba(72,202,228,0.25);
   border-radius: 10px;
   margin-bottom: 5px;
   padding: 10px;
@@ -138,7 +138,7 @@ const OptionLabel = styled.label`
 `;
 
 const AddToCartButton = styled.button`
-  background-color: #e91e63;
+  background-color: #f4845f;
   color: white;
   font-size: 1em;
   padding: 10px 20px;
@@ -150,7 +150,7 @@ const AddToCartButton = styled.button`
   margin-top: 10px;
 
   &:hover {
-    background-color: #d81b60;
+    background-color: #e76f51;
   }
 `;
 

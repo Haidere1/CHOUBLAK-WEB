@@ -1,17 +1,6 @@
-body
-{
-    }
-.main_container
-{
-    padding: 0;
-    margin: 0;
-    overflow: auto;
-    height: 100vh;
-    background-color: #BDF6FE;
-    font-family: 'Jovelyn Blur Demo';
-}
-
-.addproduct
-{
-    max-height: 100%;
+.main_container {
+  min-height: 100vh;
+  background: #f0f8ff;
+  padding: 0;
+  margin: 0;
 }

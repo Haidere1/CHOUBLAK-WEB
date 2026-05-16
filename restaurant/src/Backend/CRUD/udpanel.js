@@ -1,328 +1,339 @@
-  import React, { useState, useEffect } from 'react';
-  import styled from 'styled-components';
-  import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-  import { db } from '../../Backend/Firebase/config';
-  import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-  import { storage } from '../../Backend/Firebase/config'; // Make sure to import your Firebase storage
-  import CollapsibleExample from './navbar';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { db, storage } from '../../Backend/Firebase/config';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import CollapsibleExample from './navbar';
 
-  const AdminPanel = styled.div`
-    font-family: 'Jovelyn Blur Demo';
-    background-color: #f0f0f0;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 0px;
-      background-color: #BDF6FE;
-      font-family: 'Jovelyn Blur Demo';
-  `;
+const AdminPanelPage = () => {
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [newImage, setNewImage] = useState(null);
 
-  const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-  `;
-
-  const ProductCard = styled.div`
-    width: 90%;
-    max-width: 1000px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px 0;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border:1px solid rgba(255, 255, 255, 0.801);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      @media (max-width:425px)
-      {
-      display:flex;
-      flex-direction:column
-      }
-  `;
-
-  const ProductImage = styled.img`
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-  `;
-
-  const ProductInfo = styled.div`
-    flex: 1;
-  `;
-
-  const ProductTitle = styled.h2`
-    font-size: 1.5em;
-    color: #333;
-    @media (max-width:425px)
-  {
-    font-size:1.2em
-  }
-  `;
-
-  const ProductDescription = styled.p`
-    font-size: 1em;
-    color: #666;
-    margin: 10px 0;
-  `;
-
-  const ProductPrice = styled.p`
-    font-size: 1.25em;
-    color: #e91e63;
-  `;
-
-  const Button = styled.button`
-    background-color: #e91e63;
-    color: white;
-    font-size: 0.9em;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  margin-left:10px;
-    &:hover {
-      background-color: #d81b60;
-    }
-  `;
-
-  const ModalBackdrop = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  `;
-
-  const ModalContent = styled.div`
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 600px;
-    position: relative;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border:1px solid rgba(255, 255, 255, 0.801);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  `;
-
-  const ModalHeader = styled.h2`
-    margin-bottom: 20px;
-    color: #333;
-  `;
-
-  const FormField = styled.div`
-    margin-bottom: 15px;
-  `;
-
-  const FormLabel = styled.label`
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  `;
-
-  const FormInput = styled.input`
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  `;
-
-  const FormTextArea = styled.textarea`
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    resize: vertical;
-  `;
-
-  const FormFileInput = styled.input`
-    width: 100%;
-  `;
-
-  const ModalButton = styled.button`
-    background-color: #e91e63;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 10px;
-
-    &:hover {
-      background-color: #d81b60;
-    }
-  `;
-
-  const AdminPanelPage = () => {
-    const [products, setProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [newImage, setNewImage] = useState(null); // To store the selected image file
-
-    useEffect(() => {
-      const fetchProducts = async () => {
-        const querySnapshot = await getDocs(collection(db, 'Products'));
-        const productsArray = [];
-        querySnapshot.forEach((doc) => {
-          productsArray.push({ id: doc.id, ...doc.data() });
-        });
-        setProducts(productsArray);
-      };
-      fetchProducts();
-    }, []);
-
-    const handleDelete = async (id) => {
-      await deleteDoc(doc(db, 'Products', id));
-      setProducts(products.filter(product => product.id !== id));
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, 'Products'));
+      const arr = [];
+      querySnapshot.forEach((doc) => arr.push({ id: doc.id, ...doc.data() }));
+      setProducts(arr);
     };
+    fetchProducts();
+  }, []);
 
-    const handleUpdate = async (id) => {
-      if (newImage) {
-        // Upload the new image to Firebase Storage
-        const storageRef = ref(storage, `product.images/${newImage.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, newImage);
-
-        uploadTask.on('state_changed', 
-          null, 
-          (error) => console.error(error), 
-          async () => {
-            // Get the download URL of the uploaded image
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-            // Update the product document with the new image URL
-            await updateDoc(doc(db, 'Products', id), {
-              ...selectedProduct,
-              ProductImg: downloadURL,
-            });
-            setSelectedProduct(null);
-            setNewImage(null); // Clear the image file after updating
-          }
-        );
-      } else {
-        // Update product document without changing the image
-        await updateDoc(doc(db, 'Products', id), selectedProduct);
-        setSelectedProduct(null);
-      }
-      setProducts(products.map(product =>
-        product.id === id ? { ...product, ...selectedProduct } : product
-      ));
-    };
-
-    const handleOpenModal = (product) => {
-      setSelectedProduct(product);
-    };
-
-    const handleCloseModal = () => {
-      setSelectedProduct(null);
-      setNewImage(null); // Clear the image file when closing the modal
-    };
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setSelectedProduct({
-        ...selectedProduct,
-        [name]: value
-      });
-    };
-
-    const handleImageChange = (e) => {
-      setNewImage(e.target.files[0]); // Set the selected image file
-    };
-
-    return (
-      <AdminPanel>
-        <CollapsibleExample/>
-        <Container>
-          {products.map((product) => (
-            <ProductCard key={product.id}>
-              <ProductImage src={product.ProductImg} alt={product.ProductName} />
-              <ProductInfo>
-                <ProductTitle>{product.ProductName}</ProductTitle>
-                <ProductDescription>{product.ProductDescription}</ProductDescription>
-                <ProductPrice>{`$${product.ProductPrice}`}</ProductPrice>
-                <Button onClick={() => handleOpenModal(product)}>Update</Button>
-                <Button onClick={() => handleDelete(product.id)}>Delete</Button>
-              </ProductInfo>
-            </ProductCard>
-          ))}
-        </Container>
-
-        {selectedProduct && (
-          <ModalBackdrop>
-            <ModalContent>
-              <ModalHeader>Update Product</ModalHeader>
-              <FormField>
-                <FormLabel htmlFor="ProductName">Product Name</FormLabel>
-                <FormInput
-                  id="ProductName"
-                  name="ProductName"
-                  value={selectedProduct.ProductName}
-                  onChange={handleChange}
-                />
-              </FormField>
-              <FormField>
-                <FormLabel htmlFor="ProductDescription">Product Description</FormLabel>
-                <FormTextArea
-                  id="ProductDescription"
-                  name="ProductDescription"
-                  value={selectedProduct.ProductDescription}
-                  onChange={handleChange}
-                />
-              </FormField>
-              <FormField>
-                <FormLabel htmlFor="ProductPrice">Product Price</FormLabel>
-                <FormInput
-                  id="ProductPrice"
-                  name="ProductPrice"
-                  type="number"
-                  value={selectedProduct.ProductPrice}
-                  onChange={handleChange}
-                />
-              </FormField>
-              <FormField>
-                <FormLabel htmlFor="ProductImg">Product Image URL</FormLabel>
-                <FormInput
-                  id="ProductImg"
-                  name="ProductImg"
-                  value={selectedProduct.ProductImg}
-                  onChange={handleChange}
-                  readOnly
-                />
-              </FormField>
-              <FormField>
-                <FormLabel htmlFor="NewImage">Upload New Image</FormLabel>
-                <FormFileInput
-                  id="NewImage"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-              </FormField>
-              <div>
-                <ModalButton onClick={() => handleUpdate(selectedProduct.id)}>Save</ModalButton>
-                <ModalButton onClick={handleCloseModal}>Cancel</ModalButton>
-              </div>
-            </ModalContent>
-          </ModalBackdrop>
-        )}
-      </AdminPanel>
-    );
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, 'Products', id));
+    setProducts(products.filter(p => p.id !== id));
   };
 
-  export default AdminPanelPage;
+  const handleUpdate = async (id) => {
+    if (newImage) {
+      const storageRef = ref(storage, `product.images/${newImage.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, newImage);
+      uploadTask.on('state_changed', null,
+        (err) => console.error(err),
+        async () => {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          await updateDoc(doc(db, 'Products', id), { ...selectedProduct, ProductImg: url });
+          setSelectedProduct(null);
+          setNewImage(null);
+        }
+      );
+    } else {
+      await updateDoc(doc(db, 'Products', id), selectedProduct);
+      setSelectedProduct(null);
+    }
+    setProducts(products.map(p => p.id === id ? { ...p, ...selectedProduct } : p));
+  };
+
+  const handleChange = (e) => {
+    setSelectedProduct({ ...selectedProduct, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <PageWrapper>
+      <CollapsibleExample />
+      <PageInner>
+        <PageTitle>Manage Products</PageTitle>
+        <Grid>
+          {products.map((product) => (
+            <ProductCard key={product.id}>
+              <ProductImg src={product.ProductImg} alt={product.ProductName} />
+              <ProductInfo>
+                <ProductName>{product.ProductName}</ProductName>
+                <ProductDesc>{product.ProductDescription}</ProductDesc>
+                <ProductPrice>${product.ProductPrice}</ProductPrice>
+                <CategoryTag>{product.Category}</CategoryTag>
+              </ProductInfo>
+              <CardActions>
+                <UpdateBtn onClick={() => setSelectedProduct(product)}>Edit</UpdateBtn>
+                <DeleteBtn onClick={() => handleDelete(product.id)}>Delete</DeleteBtn>
+              </CardActions>
+            </ProductCard>
+          ))}
+        </Grid>
+      </PageInner>
+
+      {selectedProduct && (
+        <ModalBackdrop onClick={handleChange}>
+          <ModalBox onClick={(e) => e.stopPropagation()}>
+            <ModalTitle>Edit Product</ModalTitle>
+
+            <FieldGroup>
+              <FieldLabel>Product Name</FieldLabel>
+              <FieldInput name="ProductName" value={selectedProduct.ProductName} onChange={handleChange} />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Description</FieldLabel>
+              <FieldTextArea name="ProductDescription" value={selectedProduct.ProductDescription} onChange={handleChange} />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Price ($)</FieldLabel>
+              <FieldInput name="ProductPrice" type="number" value={selectedProduct.ProductPrice} onChange={handleChange} />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Current Image URL</FieldLabel>
+              <FieldInput name="ProductImg" value={selectedProduct.ProductImg} readOnly style={{ opacity: 0.5, cursor: 'not-allowed' }} />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Upload New Image</FieldLabel>
+              <FieldInput type="file" accept="image/*" onChange={(e) => setNewImage(e.target.files[0])} />
+            </FieldGroup>
+
+            <ModalActions>
+              <SaveBtn onClick={() => handleUpdate(selectedProduct.id)}>Save Changes</SaveBtn>
+              <CancelBtn onClick={() => { setSelectedProduct(null); setNewImage(null); }}>Cancel</CancelBtn>
+            </ModalActions>
+          </ModalBox>
+        </ModalBackdrop>
+      )}
+    </PageWrapper>
+  );
+};
+
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  background: #f0f8ff;
+  padding-bottom: 60px;
+`;
+
+const PageInner = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+`;
+
+const PageTitle = styled.h2`
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #023047;
+  margin-bottom: 28px;
+  letter-spacing: -0.5px;
+`;
+
+const Grid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const ProductCard = styled.div`
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(72, 202, 228, 0.16);
+  box-shadow: 0 4px 20px rgba(0, 150, 199, 0.07);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: box-shadow 0.25s ease;
+  &:hover { box-shadow: 0 8px 28px rgba(0, 150, 199, 0.13); }
+  @media (max-width: 600px) { flex-direction: column; align-items: flex-start; }
+`;
+
+const ProductImg = styled.img`
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+`;
+
+const ProductInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const ProductName = styled.h3`
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #023047;
+  margin-bottom: 4px;
+`;
+
+const ProductDesc = styled.p`
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 6px;
+  line-height: 1.5;
+`;
+
+const ProductPrice = styled.span`
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f4845f;
+  display: inline-block;
+  margin-right: 10px;
+`;
+
+const CategoryTag = styled.span`
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #0096c7;
+  background: rgba(0, 150, 199, 0.1);
+  padding: 3px 10px;
+  border-radius: 50px;
+`;
+
+const CardActions = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+`;
+
+const UpdateBtn = styled.button`
+  background: #0096c7;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { background: #007bb5; box-shadow: 0 4px 14px rgba(0, 150, 199, 0.35); }
+`;
+
+const DeleteBtn = styled.button`
+  background: transparent;
+  color: #e74c3c;
+  border: 1.5px solid #e74c3c;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { background: #e74c3c; color: white; }
+`;
+
+const ModalBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 48, 71, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+`;
+
+const ModalBox = styled.div`
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+`;
+
+const ModalTitle = styled.h2`
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #023047;
+  margin-bottom: 28px;
+`;
+
+const FieldGroup = styled.div`
+  margin-bottom: 18px;
+`;
+
+const FieldLabel = styled.label`
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #023047;
+  margin-bottom: 7px;
+`;
+
+const FieldInput = styled.input`
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(0, 150, 199, 0.22);
+  border-radius: 10px;
+  font-size: 0.93rem;
+  color: #023047;
+  background: #f8fdff;
+  outline: none;
+  transition: border-color 0.2s ease;
+  &:focus { border-color: #48cae4; background: #ffffff; }
+`;
+
+const FieldTextArea = styled.textarea`
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(0, 150, 199, 0.22);
+  border-radius: 10px;
+  font-size: 0.93rem;
+  color: #023047;
+  background: #f8fdff;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s ease;
+  &:focus { border-color: #48cae4; background: #ffffff; }
+`;
+
+const ModalActions = styled.div`
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+`;
+
+const SaveBtn = styled.button`
+  flex: 1;
+  padding: 13px;
+  background: #f4845f;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover { background: #e76f51; box-shadow: 0 6px 18px rgba(244, 132, 95, 0.4); }
+`;
+
+const CancelBtn = styled.button`
+  flex: 1;
+  padding: 13px;
+  background: transparent;
+  color: #023047;
+  border: 1.5px solid rgba(0, 150, 199, 0.3);
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover { background: #f0f8ff; border-color: #48cae4; }
+`;
+
+export default AdminPanelPage;

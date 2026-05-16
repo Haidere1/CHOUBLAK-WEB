@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import CollapsibleExample from '../Home/tabbar.js';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
-import { FaPlus, FaMinus } from 'react-icons/fa';
+import { FaPlus, FaMinus, FaTimes } from 'react-icons/fa';
 import './cart2.css';
 import Footer from '../Home/footer.js';
 
@@ -152,22 +152,21 @@ export default function Cart() {
 
                     )}
                     <div className="quantity-controls">
-                      <button className="btn btn-light" onClick={() => handleQuantityChange(index, item.quantity - 1)}>
+                      <button onClick={() => handleQuantityChange(index, item.quantity - 1)}>
                         <FaMinus />
                       </button>
                       <input
-                        className="form-control bg-light"
                         type="number"
                         value={item.quantity}
                         onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
                       />
-                      <button className="btn btn-light" onClick={() => handleQuantityChange(index, item.quantity + 1)}>
+                      <button onClick={() => handleQuantityChange(index, item.quantity + 1)}>
                         <FaPlus />
                       </button>
                     </div>
                     <p className="mt-2">Price: ${item.price}</p>
-                    <button className="btn btn-danger  " onClick={() => handleRemoveItem(index)}>
-                      <i className="fas fa-times"></i>
+                    <button className="cart-remove-btn" onClick={() => handleRemoveItem(index)}>
+                      <FaTimes /> Remove
                     </button>
                   </div>
                 </div>

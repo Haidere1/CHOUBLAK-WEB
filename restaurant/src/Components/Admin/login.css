@@ -1,111 +1,146 @@
-body{
-    margin: 0;
-    padding: 0;
-    font-family:Quesha;
+* { box-sizing: border-box; }
 
-}
-.menu
-{
-    z-index: -1;
-    position: relative;
-    
-    width:100vw;
-    height:100vh;
+.admin-login {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.img
-{   position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.login-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
-.glow {
-    font-size: 100px;
-    color: #fff;
-    text-align: center;
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
-    -moz-animation: glow 1s ease-in-out infinite alternate;
-    animation: glow 1s ease-in-out infinite alternate;
+
+.login-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(2,48,71,0.78), rgba(0,150,199,0.42));
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  padding: 52px 44px 44px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  color: white;
+}
+
+.login-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: #48cae4;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.login-title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  margin-bottom: 36px;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.login-field input {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  color: white;
+  font-size: 0.95rem;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  width: 100%;
+}
+
+.login-field input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+.login-field input:focus {
+  border-color: #48cae4;
+  background: rgba(255,255,255,0.13);
+}
+
+.login-error {
+  font-size: 0.82rem;
+  color: #f4845f;
+  background: rgba(244,132,95,0.12);
+  border: 1px solid rgba(244,132,95,0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+  margin: 0;
+}
+
+.login-btn {
+  width: 100%;
+  background: #f4845f;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 15px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 6px;
+}
+
+.login-btn:hover {
+  background: #e76f51;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(244,132,95,0.4);
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 40px 28px 36px;
   }
-  @keyframes glow {
-    from {
-      text-shadow: 0 0 10px rgb(161, 149, 224), 0 0 20px rgb(134, 146, 216), 0 0 30px #4dc0ee, 0 0 40px #74b7d6, 0 0 50px #9de9f3, 0 0 60px #7f8ac7, 0 0 70px #585858;
-    }
-    to {
-      text-shadow: 0 0 20px #fff, 0 0 30px #ece7ea, 0 0 40px #f8f6f7, 0 0 50px #f8f0f4, 0 0 60px #fdf7fa, 0 0 70px #faf7f9, 0 0 80px #f7f3f5;
-    }
+
+  .login-title {
+    font-size: 2rem;
   }
-
-.login
-{
-    z-index:10;
-    position:absolute;
-    top: 0%;
-    left: 30%;
-    text-align: center;
-    color: white;
-    font-size: 60% ;
-    font-family: Quesha;
-   
-}
-table
-{
-    border-spacing: 30px;
-
-}
-.input
-{
-    border: 1px solid white;
-    z-index:10;
-    position:absolute;
-    top: 20%;
-    left: 38%;
-    text-align: center;
-    color:white;
-    font-size:x-large;
-    width: 25vw;
-    height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-
-}
-.input label
-{
-    margin-left: 2vw;
-}
-.input td
-{
-    padding-top: 50px;
-}
-
-.btn1
-{
-    text-align: center;
-    position: relative;
-    border: none; 
-    background-color: transparent; 
-    color:white;
-    margin-top: 30%;
-}
-
-.inpt{
-    background: transparent;
-    border-radius: 20px;
-    text-decoration: none;
-    outline: none;
-    color: white;
-    width: 60%;
-    height: 4%;
-    border:1px solid white;
-    font-family: 'Jovelyn Blur Demo';
-}
-.glass{
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border:1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }

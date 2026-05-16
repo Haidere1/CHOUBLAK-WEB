@@ -12,17 +12,10 @@ export default function Protected(props) {
     const validateAdmin = async () => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          const adminEmail = "syedfizanhaider.fh@gmail.com";
-          if (user.email === adminEmail) {
-            setAdmin(true);
-            console.log("Admin logged in:", user);
-          } else {
-            setAdmin(false);
-            navigate('/admin/login'); // Redirect if not admin
-          }
+          setAdmin(true);
         } else {
           setAdmin(false);
-          navigate('/admin/login'); // Redirect if no user is logged in
+          navigate('/admin/login');
         }
       });
     };

@@ -3,7 +3,6 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { query, where, getDocs } from "firebase/firestore";
 import { storage, db } from '../Firebase/config.js';
-import '../CSS/addproduct.css';
 import styled from 'styled-components';
 import CollapsibleExample from "./navbar.js";
 
@@ -17,6 +16,7 @@ export const AddProduct = () => {
   const [productImg, setProductImg] = useState(null);
   const [category, setCategory] = useState('Mains');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleOptionsChange = (index, event) => {
     const newOptions = [...options];
@@ -38,85 +38,57 @@ export const AddProduct = () => {
       setError('');
     } else {
       setProductImg(null);
-      setError("Please select a valid Image format (png/jpeg)");
+      setError("Please select a valid image format (png/jpeg)");
     }
-  }
+  };
 
-const addProduct = async (e) => {
+  const addProduct = async (e) => {
     e.preventDefault();
-
-    if(productPrice <= 0) {
-        setError("The price should hold a positive non-zero Value!");
-        return;
+    if (productPrice <= 0) {
+      setError("Price must be a positive non-zero value.");
+      return;
     }
-
     try {
-        // Check if the product already exists
-        const productQuery = query(collection(db, 'Products'), where("ProductName", "==", productName));
-        const querySnapshot = await getDocs(productQuery);
-
-        if (!querySnapshot.empty) {
-            setError("Product already exists.");
-            return;
-        }
-
-        // Proceed with adding the product
-        if (productImg) {
-            const storageRef = ref(storage, `product.images/${productImg.name}`);
-            const uploadTask = uploadBytesResumable(storageRef, productImg);
-
-            uploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(`Upload is ${progress}% done`);
-                },
-                (error) => {
-                    setError(error.message);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                        const productData = {
-                            ProductName: productName,
-                            ProductDescription: productDescription,
-                            ProductPrice: productPrice,
-                            ProductImg: url,
-                            Category: category,
-                        };
-                        if (category === 'Mains') {
-                            productData.Options = options.map(opt => opt.value);
-                        }
-                        addProductToFirestore(productData);
-                    });
-                }
-            );
-        } else {
-            const productData = {
-                ProductName: productName,
-                ProductDescription: productDescription,
-                ProductPrice: productPrice,
-                Category: category,
-            };
-            if (category === 'Mains') {
-                productData.Options = options.map(opt => opt.value);
-            }
-            addProductToFirestore(productData);
-        }
-    } catch (error) {
-        setError("Failed to check product existence: " + error.message);
+      const productQuery = query(collection(db, 'Products'), where("ProductName", "==", productName));
+      const querySnapshot = await getDocs(productQuery);
+      if (!querySnapshot.empty) {
+        setError("A product with this name already exists.");
+        return;
+      }
+      if (productImg) {
+        const storageRef = ref(storage, `product.images/${productImg.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, productImg);
+        uploadTask.on('state_changed', null,
+          (err) => setError(err.message),
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              const data = { ProductName: productName, ProductDescription: productDescription, ProductPrice: productPrice, ProductImg: url, Category: category };
+              if (category === 'Mains') data.Options = options.map(o => o.value);
+              addProductToFirestore(data);
+            });
+          }
+        );
+      } else {
+        const data = { ProductName: productName, ProductDescription: productDescription, ProductPrice: productPrice, Category: category };
+        if (category === 'Mains') data.Options = options.map(o => o.value);
+        addProductToFirestore(data);
+      }
+    } catch (err) {
+      setError("Failed to check product: " + err.message);
     }
-};
+  };
 
-const addProductToFirestore = (productData) => {
-    addDoc(collection(db, 'Products'), productData)
-        .then(() => {
-            resetForm();
-            alert("UPLOAD COMPLETE");
-        })
-        .catch((error) => setError(error.message));
-};
+  const addProductToFirestore = (data) => {
+    addDoc(collection(db, 'Products'), data)
+      .then(() => {
+        resetForm();
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3500);
+      })
+      .catch((err) => setError(err.message));
+  };
 
-const resetForm = () => {
+  const resetForm = () => {
     setProductName('');
     setProductDescription('');
     setProductPrice(0);
@@ -126,113 +98,84 @@ const resetForm = () => {
     setOptionsCount(1);
     setError('');
     document.getElementById("file").value = '';
-};
-
+  };
 
   return (
-    <div className="main_container">
-      <CollapsibleExample/>
-      <Container className="glass addproduct">
+    <PageWrapper>
+      <CollapsibleExample />
+      <FormCard>
         <FormTitle>Add New Product</FormTitle>
         <StyledForm onSubmit={addProduct}>
-          <Label>Product Name</Label>
-          <StyledInput
-            type="text"
-            required
-            onChange={(e) => setProductName(e.target.value)}
-            value={productName}
-            />
-          <Label>Product Description</Label>
-          <StyledInput
-            type="text"
-            required
-            onChange={(e) => setProductDescription(e.target.value)}
-            value={productDescription}
-          />
 
-          <Label>Product Price</Label>
-          <StyledInput
-            type="number"
-            required
-            onChange={(e) => setProductPrice(e.target.value)}
-            value={productPrice}
-          />
+          <Label>Product Name</Label>
+          <StyledInput type="text" required value={productName} onChange={(e) => setProductName(e.target.value)} placeholder="e.g. Griot" />
+
+          <Label>Product Description</Label>
+          <StyledInput type="text" required value={productDescription} onChange={(e) => setProductDescription(e.target.value)} placeholder="Short description" />
+
+          <Label>Product Price ($)</Label>
+          <StyledInput type="number" required value={productPrice} onChange={(e) => setProductPrice(e.target.value)} placeholder="0.00" min="0" step="0.01" />
 
           <Label>Category</Label>
-          <StyledSelect
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
+          <StyledSelect value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="Mains">Mains</option>
             <option value="Sides">Sides</option>
           </StyledSelect>
-        {category === 'Mains' && (
 
-          <div>
-          <Label>Number of Options</Label>
-          <StyledSelect
-            value={optionsCount}
-            onChange={handleOptionsCountChange}
-          >
-            {[...Array(5)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>{i + 1}</option>
-            ))};
-
-          </StyledSelect>
-          
-          {options.map((option, index) => (
-            <div key={index}>
-              <Label>Option {index + 1}</Label>
-              <StyledInput
-                type="text"
-                value={option.value}
-                onChange={(e) => handleOptionsChange(index, e)}
-              />
+          {category === 'Mains' && (
+            <div>
+              <Label>Number of Options</Label>
+              <StyledSelect value={optionsCount} onChange={handleOptionsCountChange}>
+                {[...Array(5)].map((_, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </StyledSelect>
+              {options.map((option, index) => (
+                <div key={index}>
+                  <Label>Option {index + 1}</Label>
+                  <StyledInput type="text" value={option.value} onChange={(e) => handleOptionsChange(index, e)} placeholder={`Option ${index + 1}`} />
+                </div>
+              ))}
             </div>
-          ))}
-
-          </div>
-        )
-      }       
-
+          )}
 
           <Label>Product Image</Label>
-          <StyledInput
-            type="file"
-            onChange={productImgeHandler}
-            id="file"
-          />
+          <StyledInput type="file" onChange={productImgeHandler} id="file" />
 
-          <StyledButton type="submit">Add Product</StyledButton>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {error   && <ErrorMsg>{error}</ErrorMsg>}
+          {success && <SuccessMsg>Product added successfully!</SuccessMsg>}
+
+          <SubmitBtn type="submit">Add Product</SubmitBtn>
         </StyledForm>
-      </Container>
-    </div>
+      </FormCard>
+    </PageWrapper>
   );
 };
 
-// Styled Components
-const Container = styled.div`
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  overflow-y:scroll;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.801);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  background: #f0f8ff;
+  padding-bottom: 60px;
+`;
+
+const FormCard = styled.div`
+  max-width: 580px;
+  margin: 40px auto;
+  padding: 40px 44px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(0, 150, 199, 0.1);
+  border: 1px solid rgba(72, 202, 228, 0.18);
 `;
 
 const FormTitle = styled.h2`
+  font-size: 1.55rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #023047;
+  margin-bottom: 30px;
   text-align: center;
-  color: green;
-  margin-bottom: 20px;
-  font-family: 'Jovelyn Blur Demo';
+  letter-spacing: -0.5px;
 `;
 
 const StyledForm = styled.form`
@@ -241,53 +184,89 @@ const StyledForm = styled.form`
 `;
 
 const Label = styled.label`
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #555;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #023047;
+  margin-bottom: 7px;
+  margin-top: 4px;
 `;
 
 const StyledInput = styled.input`
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+  margin-bottom: 18px;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(0, 150, 199, 0.22);
+  border-radius: 10px;
+  font-size: 0.93rem;
+  color: #023047;
+  background: #f8fdff;
+  transition: border-color 0.2s ease;
+  outline: none;
   &:focus {
-    border-color: #007BFF;
-    outline: none;
+    border-color: #48cae4;
+    background: #ffffff;
+  }
+  &[type="file"] {
+    padding: 8px 12px;
+    background: #f0f8ff;
+    cursor: pointer;
   }
 `;
 
 const StyledSelect = styled.select`
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  &:focus {
-    border-color: #007BFF;
-    outline: none;
-  }
-`;
-
-const StyledButton = styled.button`
-  background-color: #e91e63;
-  color: white;
-  font-size: 0.9em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
+  margin-bottom: 18px;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(0, 150, 199, 0.22);
+  border-radius: 10px;
+  font-size: 0.93rem;
+  color: #023047;
+  background: #f8fdff;
+  outline: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: border-color 0.2s ease;
+  &:focus { border-color: #48cae4; }
+`;
+
+const SubmitBtn = styled.button`
+  margin-top: 10px;
+  padding: 14px;
+  background: #f4845f;
+  color: white;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s ease;
   &:hover {
-    background-color: #d81b60;
+    background: #e76f51;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(244, 132, 95, 0.4);
   }
 `;
 
-const ErrorMessage = styled.span`
+const ErrorMsg = styled.p`
+  font-size: 0.83rem;
   color: #e74c3c;
-  font-size: 14px;
-  margin-top: 10px;
+  background: rgba(231, 76, 60, 0.08);
+  border: 1px solid rgba(231, 76, 60, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+const SuccessMsg = styled.p`
+  font-size: 0.83rem;
+  color: #0096c7;
+  background: rgba(0, 150, 199, 0.08);
+  border: 1px solid rgba(0, 150, 199, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
   text-align: center;
 `;
 
